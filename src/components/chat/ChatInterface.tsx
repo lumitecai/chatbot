@@ -114,12 +114,10 @@ export function ChatInterface() {
   return (
     <div className="flex h-full flex-col">
       {/* Messages */}
-      <div className="flex-1 overflow-hidden">
-        <MessageList
-          messages={activeConversation.messages}
-          isLoading={isLoading}
-        />
-      </div>
+      <MessageList
+        messages={activeConversation.messages}
+        isLoading={isLoading}
+      />
 
       {/* Actions and Input */}
       <div className="border-t bg-background">

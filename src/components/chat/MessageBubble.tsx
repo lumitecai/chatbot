@@ -1,5 +1,5 @@
-import React from 'react';
-import { User, Bot } from 'lucide-react';
+import React, { useState } from 'react';
+import { User, Bot, Copy, Check } from 'lucide-react';
 import { Message } from '@/types';
 import { formatTimestamp } from '@/utils/helpers';
 import { MarkdownMessage } from './MarkdownMessage';
@@ -12,6 +12,17 @@ interface MessageBubbleProps {
 
 function MessageBubbleComponent({ message, isLoading = false }: MessageBubbleProps) {
   const isUser = message.role === 'user';
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(message.content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy text:', err);
+    }
+  };
 
   return (
     <div
@@ -63,14 +74,35 @@ function MessageBubbleComponent({ message, isLoading = false }: MessageBubblePro
                 />
               )}
             </div>
-            <p
-              className={cn(
-                'text-xs mt-2 opacity-70',
-                isUser ? 'text-primary-foreground' : 'text-muted-foreground'
+            <div className="flex items-center gap-2 mt-2">
+              <p
+                className={cn(
+                  'text-xs opacity-70',
+                  isUser ? 'text-primary-foreground' : 'text-muted-foreground'
+                )}
+              >
+                {formatTimestamp(message.timestamp)}
+              </p>
+              {!isUser && (
+                <button
+                  onClick={handleCopy}
+                  className={cn(
+                    'p-1 rounded transition-all duration-200',
+                    'hover:bg-background/50',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+                    copied ? 'text-green-600' : 'text-muted-foreground hover:text-foreground'
+                  )}
+                  aria-label={copied ? 'Copied!' : 'Copy message'}
+                  title={copied ? 'Copied!' : 'Copy to clipboard'}
+                >
+                  {copied ? (
+                    <Check className="w-3.5 h-3.5" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5" />
+                  )}
+                </button>
               )}
-            >
-              {formatTimestamp(message.timestamp)}
-            </p>
+            </div>
           </>
         )}
       </div>
