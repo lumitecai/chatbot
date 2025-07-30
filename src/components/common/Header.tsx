@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Menu, Settings } from 'lucide-react';
+import { Menu, Settings, LogOut } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { SettingsModal } from './SettingsModal';
 import { useSession } from '@/contexts/SessionContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 
 interface HeaderProps {
@@ -13,6 +14,7 @@ interface HeaderProps {
 export function Header({ onMenuClick, isSidebarOpen }: HeaderProps) {
   const [showSettings, setShowSettings] = useState(false);
   const { isConfigured } = useSession();
+  const { logout } = useAuth();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center px-4 gap-4">
@@ -51,6 +53,20 @@ export function Header({ onMenuClick, isSidebarOpen }: HeaderProps) {
               )}
             </button>
             <ThemeToggle />
+            <button
+              onClick={logout}
+              className={cn(
+                'inline-flex h-10 w-10 items-center justify-center rounded-lg',
+                'text-sm font-medium ring-offset-background transition-colors',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                'disabled:pointer-events-none disabled:opacity-50',
+                'hover:bg-accent hover:text-accent-foreground'
+              )}
+              aria-label="Logout"
+              title="Logout"
+            >
+              <LogOut className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </div>
