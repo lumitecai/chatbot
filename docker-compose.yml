@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Development service
+  chatbot-dev:
+    build:
+      context: .
+      target: development
+    container_name: chatbot-demo-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_N8N_WEBHOOK_URL=${REACT_APP_N8N_WEBHOOK_URL}
+      - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+    stdin_open: true
+    tty: true
+    command: npm start
+
+  # Test service
+  chatbot-test:
+    build:
+      context: .
+      target: test
+    container_name: chatbot-demo-test
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=test
+      - CI=true
+    command: npm test -- --watchAll=false --coverage
+
+  # Build service
+  chatbot-build:
+    build:
+      context: .
+      target: build
+    container_name: chatbot-demo-build
+    volumes:
+      - ./build:/app/build
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_N8N_WEBHOOK_URL=${REACT_APP_N8N_WEBHOOK_URL}
+      - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+
+  # Production preview service
+  chatbot-prod:
+    build:
+      context: .
+      target: production
+    container_name: chatbot-demo-prod
+    ports:
+      - "8080:80"
+    environment:
+      - NODE_ENV=production
