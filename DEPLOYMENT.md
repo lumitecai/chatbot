@@ -13,11 +13,12 @@ This guide covers deploying the AI Chatbot application to Coolify.
 Set the following environment variables in your Coolify application settings:
 
 ```
-REACT_APP_N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/chat-webhook
-REACT_APP_API_BASE_URL=https://your-n8n-instance.com/webhook/chat-webhook
+REACT_APP_N8N_WEBHOOK_URL=https://lumitecai-u40468.vm.elestio.app/webhook/chat-webhook
+REACT_APP_N8N_TEST_WEBHOOK_URL=https://lumitecai-u40468.vm.elestio.app/webhook-test/chat-webhook
+REACT_APP_API_BASE_URL=https://lumitecai-u40468.vm.elestio.app/webhook/chat-webhook
 ```
 
-Replace `https://your-n8n-instance.com/webhook/chat-webhook` with your actual n8n webhook URL.
+These are the same values used in development and are ready for production use.
 
 ## Deployment Configuration
 
