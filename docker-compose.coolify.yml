@@ -1,29 +1,77 @@
 version: '3.8'
 
 services:
+  # Main chatbot application
   chatbot:
     build:
       context: .
-      target: production
-      args:
-        - NODE_ENV=production
-    # No container_name - let Coolify manage it
-    # No ports - Coolify's reverse proxy handles external access
+      dockerfile: Dockerfile.production
     expose:
-      - "80"  # Internal port for nginx
+      - "80"
     environment:
       - NODE_ENV=production
       - REACT_APP_N8N_WEBHOOK_URL=${REACT_APP_N8N_WEBHOOK_URL}
       - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+      - REACT_APP_WEBSOCKET_URL=${REACT_APP_WEBSOCKET_URL:-wss://chatbot.lumitec.ai/ws}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health.txt"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
+    labels:
+      # Traefik labels for Coolify
+      - "traefik.enable=true"
+      - "traefik.http.services.chatbot.loadbalancer.server.port=80"
+      - "traefik.http.routers.chatbot.rule=Host(`${DOMAIN:-chatbot.lumitec.ai}`)"
+      - "traefik.http.routers.chatbot.entrypoints=websecure"
+      - "traefik.http.routers.chatbot.tls=true"
+      - "traefik.http.routers.chatbot.tls.certresolver=letsencrypt"
+      # Middleware for CORS if needed
+      - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST,DELETE"
+      - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolalloworigin=*"
+      - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolallowheaders=*"
+      - "traefik.http.routers.chatbot.middlewares=chatbot-cors"
+    networks:
+      - coolify
+
+  # WebSocket server for workflow status updates
+  websocket-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    expose:
+      - "3001"
+    environment:
+      - WS_PORT=3001
+      - NODE_ENV=production
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-https://chatbot.lumitec.ai}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    labels:
+      # Traefik labels for WebSocket routing
+      - "traefik.enable=true"
+      - "traefik.http.services.websocket.loadbalancer.server.port=3001"
+      # WebSocket route on /ws path
+      - "traefik.http.routers.websocket.rule=Host(`${DOMAIN:-chatbot.lumitec.ai}`) && PathPrefix(`/ws`)"
+      - "traefik.http.routers.websocket.entrypoints=websecure"
+      - "traefik.http.routers.websocket.tls=true"
+      - "traefik.http.routers.websocket.tls.certresolver=letsencrypt"
+      # Strip the /ws prefix before forwarding to the WebSocket server
+      - "traefik.http.middlewares.websocket-stripprefix.stripprefix.prefixes=/ws"
+      - "traefik.http.routers.websocket.middlewares=websocket-stripprefix"
+      # Enable WebSocket support
+      - "traefik.http.services.websocket.loadbalancer.server.scheme=http"
+      - "traefik.http.services.websocket.loadbalancer.passhostheader=true"
+    networks:
+      - coolify
+
+networks:
+  coolify:
+    external: true
