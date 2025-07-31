@@ -19,6 +19,9 @@ RUN npm run build && \
 # Production stage
 FROM nginx:alpine
 
+# Install curl for health checks
+RUN apk add --no-cache curl
+
 # Remove default nginx static assets
 RUN rm -rf /usr/share/nginx/html/*
 
@@ -36,7 +39,7 @@ RUN echo "OK" > /usr/share/nginx/html/health.txt
 
 EXPOSE 80
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=5 \
+  CMD curl -f http://localhost/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]

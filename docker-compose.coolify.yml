@@ -16,27 +16,16 @@ services:
       - REACT_APP_WEBSOCKET_URL=${REACT_APP_WEBSOCKET_URL:-wss://chatbot.lumitec.ai/ws}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 40s
+      retries: 5
+      start_period: 60s
     labels:
       # Coolify labels
       - "coolify.managed=true"
       - "coolify.type=application"
       - "coolify.port=80"
-      - "coolify.main=true"
-      # Traefik labels for routing
-      - "traefik.enable=true"
-      - "traefik.http.routers.chatbot.rule=Host(`${DOMAIN:-chatbot.lumitec.ai}`)"
-      - "traefik.http.services.chatbot.loadbalancer.server.port=80"
-      - "traefik.http.routers.chatbot.service=chatbot"
-      # CORS middleware
-      - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST,DELETE"
-      - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolalloworigin=*"
-      - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolallowheaders=*"
-      - "traefik.http.routers.chatbot.middlewares=chatbot-cors"
 
   # WebSocket server for workflow status updates
   websocket-server:
@@ -51,23 +40,14 @@ services:
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-https://chatbot.lumitec.ai}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1); })"]
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
       interval: 30s
-      timeout: 3s
-      retries: 3
-      start_period: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      - chatbot
     labels:
       # Coolify labels
       - "coolify.managed=true"
       - "coolify.type=application"
-      - "coolify.port=3001"
-      # Traefik labels for WebSocket routing
-      - "traefik.enable=true"
-      - "traefik.http.routers.websocket.rule=Host(`${DOMAIN:-chatbot.lumitec.ai}`) && PathPrefix(`/ws`)"
-      - "traefik.http.services.websocket.loadbalancer.server.port=3001"
-      - "traefik.http.routers.websocket.service=websocket"
-      # WebSocket support headers
-      - "traefik.http.middlewares.websocket-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
-      # Strip prefix middleware
-      - "traefik.http.middlewares.websocket-stripprefix.stripprefix.prefixes=/ws"
-      - "traefik.http.routers.websocket.middlewares=websocket-stripprefix,websocket-headers"

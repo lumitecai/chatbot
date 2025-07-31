@@ -2,6 +2,9 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+# Install curl for health checks
+RUN apk add --no-cache curl
+
 # Copy package files
 COPY package*.json ./
 
@@ -15,8 +18,8 @@ COPY . .
 EXPOSE 3001
 
 # Add health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3001/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1); })"
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=5 \
+  CMD curl -f http://localhost:3001/health || exit 1
 
 # Run the server
 CMD ["node", "websocket-server.js"]
