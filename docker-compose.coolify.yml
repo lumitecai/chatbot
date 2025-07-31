@@ -16,7 +16,7 @@ services:
       - REACT_APP_WEBSOCKET_URL=${REACT_APP_WEBSOCKET_URL:-wss://chatbot.lumitec.ai/ws}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health.txt"]
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -31,6 +31,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.chatbot.rule=Host(`${DOMAIN:-chatbot.lumitec.ai}`)"
       - "traefik.http.services.chatbot.loadbalancer.server.port=80"
+      - "traefik.http.routers.chatbot.service=chatbot"
       # CORS middleware
       - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST,DELETE"
       - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolalloworigin=*"
@@ -64,6 +65,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.websocket.rule=Host(`${DOMAIN:-chatbot.lumitec.ai}`) && PathPrefix(`/ws`)"
       - "traefik.http.services.websocket.loadbalancer.server.port=3001"
+      - "traefik.http.routers.websocket.service=websocket"
       # WebSocket support headers
       - "traefik.http.middlewares.websocket-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
       # Strip prefix middleware
