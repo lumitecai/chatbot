@@ -8,8 +8,10 @@ services:
       args:
         - NODE_ENV=production
     container_name: chatbot-prod
-    ports:
-      - "80:80"
+    # Coolify handles port mapping via reverse proxy
+    # No ports mapping needed here
+    expose:
+      - "80"
     environment:
       - NODE_ENV=production
       - REACT_APP_N8N_WEBHOOK_URL=${REACT_APP_N8N_WEBHOOK_URL}
