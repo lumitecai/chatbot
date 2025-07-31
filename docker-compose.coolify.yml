@@ -1,4 +1,5 @@
-version: '3.8'
+# Docker Compose configuration optimized for Coolify deployment
+# Coolify will handle environment variables and secrets
 
 services:
   # Main chatbot application
@@ -21,20 +22,20 @@ services:
       retries: 3
       start_period: 40s
     labels:
-      # Traefik labels for Coolify
+      # Coolify labels
+      - "coolify.managed=true"
+      - "coolify.type=application"
+      - "coolify.port=80"
+      - "coolify.main=true"
+      # Traefik labels for routing
       - "traefik.enable=true"
-      - "traefik.http.services.chatbot.loadbalancer.server.port=80"
       - "traefik.http.routers.chatbot.rule=Host(`${DOMAIN:-chatbot.lumitec.ai}`)"
-      - "traefik.http.routers.chatbot.entrypoints=websecure"
-      - "traefik.http.routers.chatbot.tls=true"
-      - "traefik.http.routers.chatbot.tls.certresolver=letsencrypt"
-      # Middleware for CORS if needed
+      - "traefik.http.services.chatbot.loadbalancer.server.port=80"
+      # CORS middleware
       - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST,DELETE"
       - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolalloworigin=*"
       - "traefik.http.middlewares.chatbot-cors.headers.accesscontrolallowheaders=*"
       - "traefik.http.routers.chatbot.middlewares=chatbot-cors"
-    networks:
-      - coolify
 
   # WebSocket server for workflow status updates
   websocket-server:
@@ -55,23 +56,16 @@ services:
       retries: 3
       start_period: 10s
     labels:
+      # Coolify labels
+      - "coolify.managed=true"
+      - "coolify.type=application"
+      - "coolify.port=3001"
       # Traefik labels for WebSocket routing
       - "traefik.enable=true"
-      - "traefik.http.services.websocket.loadbalancer.server.port=3001"
-      # WebSocket route on /ws path
       - "traefik.http.routers.websocket.rule=Host(`${DOMAIN:-chatbot.lumitec.ai}`) && PathPrefix(`/ws`)"
-      - "traefik.http.routers.websocket.entrypoints=websecure"
-      - "traefik.http.routers.websocket.tls=true"
-      - "traefik.http.routers.websocket.tls.certresolver=letsencrypt"
-      # Strip the /ws prefix before forwarding to the WebSocket server
+      - "traefik.http.services.websocket.loadbalancer.server.port=3001"
+      # WebSocket support headers
+      - "traefik.http.middlewares.websocket-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+      # Strip prefix middleware
       - "traefik.http.middlewares.websocket-stripprefix.stripprefix.prefixes=/ws"
-      - "traefik.http.routers.websocket.middlewares=websocket-stripprefix"
-      # Enable WebSocket support
-      - "traefik.http.services.websocket.loadbalancer.server.scheme=http"
-      - "traefik.http.services.websocket.loadbalancer.passhostheader=true"
-    networks:
-      - coolify
-
-networks:
-  coolify:
-    external: true
+      - "traefik.http.routers.websocket.middlewares=websocket-stripprefix,websocket-headers"
