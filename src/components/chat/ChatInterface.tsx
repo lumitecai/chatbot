@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useConversation } from '@/contexts/ConversationContext';
+import { useTranslation } from '@/hooks/useTranslation';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 import { WorkflowStatus } from './WorkflowStatus';
@@ -10,6 +11,7 @@ import { useStreamingChat } from '@/hooks/useStreamingChat';
 export function ChatInterface() {
   const { activeConversation, createNewConversation } = useConversation();
   const { sendMessage, isLoading, isStreaming } = useStreamingChat();
+  const { t } = useTranslation();
   const [suggestions] = useState<string[]>([]);
 
   // Create a new conversation if none exists
@@ -39,7 +41,7 @@ export function ChatInterface() {
       <div className="flex h-full items-center justify-center">
         <div className="text-center">
           <h2 className="text-lg font-medium text-muted-foreground">
-            Loading conversation...
+            {t('chat.loadingConversation')}
           </h2>
         </div>
       </div>
@@ -77,7 +79,7 @@ export function ChatInterface() {
           <ChatInput
             onSend={handleSendMessage}
             isLoading={isLoading}
-            placeholder="Type your message..."
+            placeholder={t('chat.typeMessage')}
           />
         </div>
       </div>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Menu, Settings, LogOut } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { LanguageSelector } from './LanguageSelector';
 import { SettingsModal } from './SettingsModal';
 import { useSession } from '@/contexts/SessionContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 
 interface HeaderProps {
@@ -15,6 +17,8 @@ export function Header({ onMenuClick, isSidebarOpen }: HeaderProps) {
   const [showSettings, setShowSettings] = useState(false);
   const { isConfigured } = useSession();
   const { logout } = useAuth();
+  const { t } = useTranslation();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center px-4 gap-4">
@@ -28,13 +32,13 @@ export function Header({ onMenuClick, isSidebarOpen }: HeaderProps) {
             'hover:bg-accent hover:text-accent-foreground',
             'lg:hidden'
           )}
-          aria-label={isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+          aria-label={isSidebarOpen ? t('closeSidebar') : t('openSidebar')}
         >
           <Menu className="h-5 w-5" />
         </button>
 
         <div className="flex flex-1 items-center justify-between">
-          <h1 className="text-xl font-semibold">AI Chat Assistant</h1>
+          <h1 className="text-xl font-semibold">{t('appTitle')}</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowSettings(true)}
@@ -45,13 +49,15 @@ export function Header({ onMenuClick, isSidebarOpen }: HeaderProps) {
                 'disabled:pointer-events-none disabled:opacity-50',
                 'hover:bg-accent hover:text-accent-foreground'
               )}
-              aria-label="Settings"
+              aria-label={t('settings')}
+              title={t('settings')}
             >
               <Settings className="h-5 w-5" />
               {!isConfigured && (
                 <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-destructive animate-pulse" />
               )}
             </button>
+            <LanguageSelector />
             <ThemeToggle />
             <button
               onClick={logout}
@@ -62,8 +68,8 @@ export function Header({ onMenuClick, isSidebarOpen }: HeaderProps) {
                 'disabled:pointer-events-none disabled:opacity-50',
                 'hover:bg-accent hover:text-accent-foreground'
               )}
-              aria-label="Logout"
-              title="Logout"
+              aria-label={t('logout')}
+              title={t('logout')}
             >
               <LogOut className="h-5 w-5" />
             </button>

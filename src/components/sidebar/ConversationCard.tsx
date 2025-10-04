@@ -3,6 +3,7 @@ import { Trash2 } from 'lucide-react';
 import { Conversation } from '@/types';
 import { useConversation } from '@/contexts/ConversationContext';
 import { useToast } from '@/contexts/ToastContext';
+import { useTranslation } from '@/hooks/useTranslation';
 import { formatTimestamp, truncateText } from '@/utils/helpers';
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 import { cn } from '@/lib/utils';
@@ -16,6 +17,7 @@ interface ConversationCardProps {
 export function ConversationCard({ conversation, isActive, onClick }: ConversationCardProps) {
   const { deleteConversation } = useConversation();
   const { showToast } = useToast();
+  const { t } = useTranslation();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -29,7 +31,7 @@ export function ConversationCard({ conversation, isActive, onClick }: Conversati
     // Add a small delay for visual feedback
     setTimeout(() => {
       deleteConversation(conversation.id);
-      showToast(`Conversation "${conversation.title}" deleted`, 'success');
+      showToast(t('conversationDeleted', { title: conversation.title }), 'success');
     }, 400);
   };
 
@@ -77,7 +79,7 @@ export function ConversationCard({ conversation, isActive, onClick }: Conversati
               'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
               'disabled:opacity-50 disabled:cursor-not-allowed'
             )}
-            aria-label="Delete conversation"
+            aria-label={t('deleteConversation')}
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>
@@ -89,10 +91,10 @@ export function ConversationCard({ conversation, isActive, onClick }: Conversati
         isOpen={showDeleteConfirm}
         onClose={() => setShowDeleteConfirm(false)}
         onConfirm={confirmDelete}
-        title="Delete Conversation"
-        message={`Are you sure you want to delete "${conversation.title}"? This action cannot be undone.`}
-        confirmText="Delete"
-        cancelText="Cancel"
+        title={t('deleteConversation')}
+        message={t('deleteConversationConfirm', { title: conversation.title })}
+        confirmText={t('delete')}
+        cancelText={t('cancel')}
         variant="danger"
       />
     </>

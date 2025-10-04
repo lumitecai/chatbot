@@ -1,10 +1,12 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
 import { useConversation } from '@/contexts/ConversationContext';
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 
 export function NewChatButton() {
   const { createNewConversation } = useConversation();
+  const { t } = useTranslation();
 
   return (
     <button
@@ -17,7 +19,7 @@ export function NewChatButton() {
       )}
     >
       <Plus className="h-4 w-4" />
-      New Chat
+      {t('newChat')}
     </button>
   );
 }

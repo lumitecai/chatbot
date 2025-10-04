@@ -1,0 +1,13 @@
+{
+  "somethingWentWrong": "Oops! Something went wrong",
+  "sorryInconvenience": "We're sorry for the inconvenience. Please refresh the page to try again.",
+  "refreshPage": "Refresh Page",
+  "networkError": "Network error. Please check your connection.",
+  "requestFailed": "Request failed. Please try again.",
+  "fileUploadFailed": "File upload failed",
+  "fileTooLarge": "File is too large. Maximum size is {{maxSize}}MB",
+  "invalidFileType": "Invalid file type",
+  "sessionExpired": "Your session has expired. Please sign in again.",
+  "unauthorized": "Unauthorized. Please sign in.",
+  "notFound": "Page not found"
+}

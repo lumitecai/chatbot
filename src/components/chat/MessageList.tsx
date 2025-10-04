@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Message } from '@/types';
+import { useTranslation } from '@/hooks/useTranslation';
 import { MessageBubble } from './MessageBubble';
 
 interface MessageListProps {
@@ -11,6 +12,7 @@ interface MessageListProps {
 export function MessageList({ messages, isLoading, isStreaming = false }: MessageListProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -24,9 +26,9 @@ export function MessageList({ messages, isLoading, isStreaming = false }: Messag
     return (
       <div className="flex h-full items-center justify-center p-8">
         <div className="text-center max-w-md">
-          <h2 className="text-2xl font-semibold mb-2">Start a conversation</h2>
+          <h2 className="text-2xl font-semibold mb-2">{t('chat.startConversation')}</h2>
           <p className="text-muted-foreground">
-            Ask me anything! I'm here to help with code reviews, explanations, brainstorming, and more.
+            {t('chat.startConversationDesc')}
           </p>
         </div>
       </div>

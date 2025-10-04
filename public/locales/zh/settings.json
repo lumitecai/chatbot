@@ -1,0 +1,21 @@
+{
+  "apiSettings": "API Settings",
+  "apiKey": "API Key (Optional)",
+  "apiKeyPlaceholder": "Enter your API key",
+  "apiKeyHelp": "Used for authentication with your n8n webhook",
+  "webhookUrl": "n8n Webhook URL",
+  "webhookUrlPlaceholder": "https://your-n8n.domain/webhook/...",
+  "webhookUrlHelp": "Your n8n webhook endpoint URL",
+  "connectionInfo": "Connection Info:",
+  "connectionInfoList": [
+    "Leave webhook URL empty to use default endpoint",
+    "API key is optional but recommended for security",
+    "Settings are saved locally and used for all sessions"
+  ],
+  "connectionConfigured": "✓ Connection configured",
+  "saveSettings": "Save Settings",
+  "show": "Show",
+  "hide": "Hide",
+  "languagePreference": "Language Preference",
+  "languageHelp": "Select your preferred language for the interface"
+}

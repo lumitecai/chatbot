@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 import { Bot, AlertCircle, Loader2 } from 'lucide-react';
 import { isAzureADConfigured } from '@/config/authConfig';
 
 export function LoginPage() {
   const { login, loginWithMicrosoft, isLoading: authLoading } = useAuth();
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,10 +25,10 @@ export function LoginPage() {
     try {
       const success = await loginWithMicrosoft();
       if (!success) {
-        setError('Microsoft login failed. Please try again.');
+        setError(t('auth.loginFailed'));
       }
     } catch (err) {
-      setError('An error occurred during Microsoft login.');
+      setError(t('auth.loginError'));
     } finally {
       setIsLoading(false);
     }
@@ -40,10 +42,10 @@ export function LoginPage() {
     try {
       const success = await login(username, password);
       if (!success) {
-        setError('Invalid username or password');
+        setError(t('auth.invalidCredentials'));
       }
     } catch (err) {
-      setError('An error occurred during login.');
+      setError(t('auth.loginError'));
     } finally {
       setIsLoading(false);
     }
@@ -54,7 +56,7 @@ export function LoginPage() {
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
-          <p className="text-muted-foreground">Checking authentication...</p>
+          <p className="text-muted-foreground">{t('auth.checkingAuth')}</p>
         </div>
       </div>
     );
@@ -69,8 +71,8 @@ export function LoginPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
               <Bot className="w-8 h-8 text-primary" />
             </div>
-            <h1 className="text-2xl font-bold">Welcome to AI Chat</h1>
-            <p className="text-muted-foreground mt-2">Please sign in to continue</p>
+            <h1 className="text-2xl font-bold">{t('auth.welcomeTitle')}</h1>
+            <p className="text-muted-foreground mt-2">{t('auth.signInPrompt')}</p>
           </div>
 
           {error && (
@@ -99,7 +101,7 @@ export function LoginPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Signing in...</span>
+                    <span>{t('auth.signingIn')}</span>
                   </>
                 ) : (
                   <>
@@ -109,19 +111,19 @@ export function LoginPage() {
                       <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
                       <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
                     </svg>
-                    <span>Sign in with Microsoft</span>
+                    <span>{t('auth.signInWithMicrosoft')}</span>
                   </>
                 )}
               </button>
               <p className="text-xs text-center text-muted-foreground mt-4">
-                Use your organization's Microsoft account to sign in
+                {t('auth.useOrgAccount')}
               </p>
             </div>
           ) : (
             <div className="text-center space-y-4">
               <AlertCircle className="w-12 h-12 mx-auto text-destructive" />
               <p className="text-sm text-muted-foreground">
-                Azure AD is not configured. Please contact your administrator.
+                {t('auth.azureNotConfigured')}
               </p>
             </div>
           )}

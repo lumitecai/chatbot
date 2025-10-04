@@ -1,33 +1,36 @@
 import React from 'react';
 import { Code, FileText, Lightbulb } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 
 interface QuickActionsProps {
   onSelect: (prompt: string) => void;
 }
 
-const quickActions = [
-  {
-    id: 'code-review',
-    label: 'Code Review',
-    icon: Code,
-    prompt: 'Help me review this code for best practices and potential improvements',
-  },
-  {
-    id: 'summarize',
-    label: 'Summarize',
-    icon: FileText,
-    prompt: 'Please summarize the key points from this content',
-  },
-  {
-    id: 'brainstorm',
-    label: 'Brainstorm',
-    icon: Lightbulb,
-    prompt: "Let's brainstorm creative ideas and solutions for",
-  },
-];
-
 function QuickActionsComponent({ onSelect }: QuickActionsProps) {
+  const { t } = useTranslation();
+
+  const quickActions = [
+    {
+      id: 'code-review',
+      label: t('chat.codeReview'),
+      icon: Code,
+      prompt: t('chat.codeReviewPrompt'),
+    },
+    {
+      id: 'summarize',
+      label: t('chat.summarize'),
+      icon: FileText,
+      prompt: t('chat.summarizePrompt'),
+    },
+    {
+      id: 'brainstorm',
+      label: t('chat.brainstorm'),
+      icon: Lightbulb,
+      prompt: t('chat.brainstormPrompt'),
+    },
+  ];
+
   return (
     <div className="flex flex-wrap gap-2">
       {quickActions.map((action) => {

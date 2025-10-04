@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Settings, Key, Link, Save, AlertCircle } from 'lucide-react';
 import { useSession } from '@/contexts/SessionContext';
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 
 interface SettingsModalProps {
@@ -10,6 +11,7 @@ interface SettingsModalProps {
 
 export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { configureSession, isConfigured } = useSession();
+  const { t } = useTranslation();
   const [apiKey, setApiKey] = useState('');
   const [webhookUrl, setWebhookUrl] = useState('');
   const [showApiKey, setShowApiKey] = useState(false);
@@ -53,7 +55,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Settings className="h-5 w-5" />
-              <h2 className="text-lg font-semibold">API Settings</h2>
+              <h2 className="text-lg font-semibold">{t('settings.apiSettings')}</h2>
             </div>
             <button
               onClick={onClose}
@@ -68,14 +70,14 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <div>
               <label className="flex items-center gap-2 text-sm font-medium mb-2">
                 <Key className="h-4 w-4" />
-                API Key (Optional)
+                {t('settings.apiKey')}
               </label>
               <div className="relative">
                 <input
                   type={showApiKey ? 'text' : 'password'}
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
-                  placeholder="Enter your API key"
+                  placeholder={t('settings.apiKeyPlaceholder')}
                   className={cn(
                     'w-full rounded-md border bg-background px-3 py-2 pr-20',
                     'text-sm focus:outline-none focus:ring-2 focus:ring-ring'
@@ -86,11 +88,11 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   onClick={() => setShowApiKey(!showApiKey)}
                   className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground"
                 >
-                  {showApiKey ? 'Hide' : 'Show'}
+                  {showApiKey ? t('settings.hide') : t('settings.show')}
                 </button>
               </div>
               <p className="mt-1 text-xs text-muted-foreground">
-                Used for authentication with your n8n webhook
+                {t('settings.apiKeyHelp')}
               </p>
             </div>
 
@@ -98,20 +100,20 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <div>
               <label className="flex items-center gap-2 text-sm font-medium mb-2">
                 <Link className="h-4 w-4" />
-                n8n Webhook URL
+                {t('settings.webhookUrl')}
               </label>
               <input
                 type="url"
                 value={webhookUrl}
                 onChange={(e) => setWebhookUrl(e.target.value)}
-                placeholder="https://your-n8n.domain/webhook/..."
+                placeholder={t('settings.webhookUrlPlaceholder')}
                 className={cn(
                   'w-full rounded-md border bg-background px-3 py-2',
                   'text-sm focus:outline-none focus:ring-2 focus:ring-ring'
                 )}
               />
               <p className="mt-1 text-xs text-muted-foreground">
-                Your n8n webhook endpoint URL
+                {t('settings.webhookUrlHelp')}
               </p>
             </div>
 
@@ -119,11 +121,11 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <div className="rounded-lg bg-muted/50 p-3 flex gap-2">
               <AlertCircle className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
               <div className="text-xs text-muted-foreground">
-                <p className="font-medium mb-1">Connection Info:</p>
+                <p className="font-medium mb-1">{t('settings.connectionInfo')}</p>
                 <ul className="space-y-1 list-disc list-inside">
-                  <li>Leave webhook URL empty to use default endpoint</li>
-                  <li>API key is optional but recommended for security</li>
-                  <li>Settings are saved locally and used for all sessions</li>
+                  {(t('settings.connectionInfoList', { returnObjects: true }) as string[]).map((item, idx) => (
+                    <li key={idx}>{item}</li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -131,7 +133,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             {/* Status */}
             {isConfigured && (
               <div className="text-sm text-green-600 dark:text-green-400">
-                ✓ Connection configured
+                {t('settings.connectionConfigured')}
               </div>
             )}
           </div>
@@ -146,7 +148,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 'hover:bg-secondary/80'
               )}
             >
-              Cancel
+              {t('cancel')}
             </button>
             <button
               onClick={handleSave}
@@ -158,7 +160,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               )}
             >
               <Save className="h-4 w-4" />
-              Save Settings
+              {t('settings.saveSettings')}
             </button>
           </div>
         </div>

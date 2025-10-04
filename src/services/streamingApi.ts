@@ -58,10 +58,14 @@ export async function sendStreamingMessage(
     console.warn('Failed to parse user info:', error);
   }
 
+  // Get user's language preference
+  const userLanguage = localStorage.getItem('i18nextLng') || 'en';
+
   // Prepare payload with user context
   const payload: any = {
     message: request.message,
     conversationId: request.conversationId,
+    language: userLanguage, // Include language preference for n8n
   };
 
   // Add user context if available - send complete user object including groups and extended profile

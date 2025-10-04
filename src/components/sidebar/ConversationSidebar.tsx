@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { MessageSquare, Clock, Plus, Calendar, Archive, Search, ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft } from 'lucide-react';
 import { useConversation } from '@/contexts/ConversationContext';
+import { useTranslation } from '@/hooks/useTranslation';
 import { ConversationCard } from './ConversationCard';
 import { NewChatButton } from './NewChatButton';
 import { CollapsibleSection } from '@/components/common/CollapsibleSection';
@@ -15,6 +16,7 @@ interface ConversationSidebarProps {
 
 export function ConversationSidebar({ onClose, isCollapsed = false, onToggleCollapse }: ConversationSidebarProps) {
   const { conversations, activeConversation, setActiveConversation, createNewConversation } = useConversation();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
 
   // Group conversations by time periods
@@ -67,7 +69,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
       <div className="flex h-full flex-col">
         {/* Collapsed Header */}
         <div className="border-b p-2 flex flex-col items-center gap-2">
-          <Tooltip content="Expand sidebar" side="right">
+          <Tooltip content={t('expandSidebar')} side="right">
             <button
               onClick={onToggleCollapse}
               className={cn(
@@ -75,13 +77,13 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
                 'hover:bg-accent hover:text-accent-foreground',
                 'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring'
               )}
-              aria-label="Expand sidebar"
+              aria-label={t('expandSidebar')}
             >
               <PanelLeft className="h-5 w-5" />
             </button>
           </Tooltip>
-          
-          <Tooltip content="New chat" side="right">
+
+          <Tooltip content={t('newChat')} side="right">
             <button
               onClick={createNewConversation}
               className={cn(
@@ -89,7 +91,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
                 'hover:bg-accent hover:text-accent-foreground',
                 'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring'
               )}
-              aria-label="New chat"
+              aria-label={t('newChat')}
             >
               <Plus className="h-5 w-5" />
             </button>
@@ -129,7 +131,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
             })}
             
             {conversations.length > 10 && (
-              <Tooltip content={`${conversations.length - 10} more conversations`} side="right">
+              <Tooltip content={t('moreConversations', { count: conversations.length - 10 })} side="right">
                 <div className="text-center py-2 text-muted-foreground">
                   <span className="text-xs">+{conversations.length - 10}</span>
                 </div>
@@ -153,14 +155,14 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
             'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring',
             'transition-all duration-200 hover:scale-110'
           )}
-          aria-label="Collapse sidebar"
+          aria-label={t('collapseSidebar')}
         >
           <ChevronLeft className="h-3 w-3" />
         </button>
       </div>
 
       <CollapsibleSection
-        title="New Chat"
+        title={t('newChat')}
         icon={<Plus className="h-4 w-4" />}
         defaultOpen={true}
         headerClassName="border-b-2"
@@ -172,7 +174,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
       <div className="flex-1 overflow-y-auto">
         {conversations.length === 0 ? (
           <div className="px-4 py-8 text-center text-sm text-muted-foreground">
-            No conversations yet. Start a new chat!
+            {t('noConversations')}
           </div>
         ) : (
           <>
@@ -186,7 +188,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <input
                     type="text"
-                    placeholder="Search conversations..."
+                    placeholder={t('searchConversations')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full rounded-md border bg-background pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -198,7 +200,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
             {/* Today's Conversations */}
             {groupedConversations.today.length > 0 && (
               <CollapsibleSection
-                title="Today"
+                title={t('today')}
                 icon={<MessageSquare className="h-4 w-4" />}
                 badge={groupedConversations.today.length}
                 defaultOpen={true}
@@ -225,7 +227,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
             {/* Yesterday's Conversations */}
             {groupedConversations.yesterday.length > 0 && (
               <CollapsibleSection
-                title="Yesterday"
+                title={t('yesterday')}
                 icon={<Clock className="h-4 w-4" />}
                 badge={groupedConversations.yesterday.length}
                 defaultOpen={searchQuery.length > 0}
@@ -252,7 +254,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
             {/* This Week's Conversations */}
             {groupedConversations.thisWeek.length > 0 && (
               <CollapsibleSection
-                title="This Week"
+                title={t('thisWeek')}
                 icon={<Calendar className="h-4 w-4" />}
                 badge={groupedConversations.thisWeek.length}
                 defaultOpen={searchQuery.length > 0}
@@ -279,7 +281,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
             {/* This Month's Conversations */}
             {groupedConversations.thisMonth.length > 0 && (
               <CollapsibleSection
-                title="This Month"
+                title={t('thisMonth')}
                 icon={<Calendar className="h-4 w-4" />}
                 badge={groupedConversations.thisMonth.length}
                 defaultOpen={searchQuery.length > 0}
@@ -306,7 +308,7 @@ export function ConversationSidebar({ onClose, isCollapsed = false, onToggleColl
             {/* Older Conversations */}
             {groupedConversations.older.length > 0 && (
               <CollapsibleSection
-                title="Older"
+                title={t('older')}
                 icon={<Archive className="h-4 w-4" />}
                 badge={groupedConversations.older.length}
                 defaultOpen={searchQuery.length > 0}
