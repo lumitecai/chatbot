@@ -10,6 +10,7 @@ interface ConversationContextType {
   createNewConversation: () => Conversation;
   deleteConversation: (id: string) => void;
   addMessage: (conversationId: string, message: Message) => void;
+  updateMessage: (conversationId: string, messageId: string, updates: Partial<Message>) => void;
   updateConversation: (conversation: Conversation) => void;
 }
 
@@ -93,6 +94,31 @@ export function ConversationProvider({ children }: { children: React.ReactNode }
     });
   }, [activeConversation]);
 
+  const updateMessage = useCallback((conversationId: string, messageId: string, updates: Partial<Message>) => {
+    setConversations((prev) => {
+      return prev.map((conv) => {
+        if (conv.id === conversationId) {
+          const updatedConv = {
+            ...conv,
+            messages: conv.messages.map((msg) =>
+              msg.id === messageId ? { ...msg, ...updates } : msg
+            ),
+            lastMessage: updates.content || conv.lastMessage,
+            updatedAt: new Date().toISOString(),
+          };
+
+          // Update active conversation if it's the current one
+          if (activeConversation?.id === conversationId) {
+            setActiveConversationState(updatedConv);
+          }
+
+          return updatedConv;
+        }
+        return conv;
+      });
+    });
+  }, [activeConversation]);
+
   const updateConversation = useCallback((conversation: Conversation) => {
     setConversations((prev) => {
       return prev.map((conv) => {
@@ -117,6 +143,7 @@ export function ConversationProvider({ children }: { children: React.ReactNode }
         createNewConversation,
         deleteConversation,
         addMessage,
+        updateMessage,
         updateConversation,
       }}
     >

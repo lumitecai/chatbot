@@ -5,9 +5,10 @@ import { MessageBubble } from './MessageBubble';
 interface MessageListProps {
   messages: Message[];
   isLoading: boolean;
+  isStreaming?: boolean;
 }
 
-export function MessageList({ messages, isLoading }: MessageListProps) {
+export function MessageList({ messages, isLoading, isStreaming = false }: MessageListProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -38,11 +39,20 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
       className="flex-1 overflow-y-auto px-4 py-6"
     >
       <div className="mx-auto max-w-3xl space-y-4">
-        {messages.map((message) => (
-          <MessageBubble key={message.id} message={message} />
-        ))}
-        
-        {isLoading && (
+        {messages.map((message, index) => {
+          const isLastMessage = index === messages.length - 1;
+          const showStreamingIndicator = isLastMessage && isStreaming && message.role === 'assistant';
+
+          return (
+            <MessageBubble
+              key={message.id}
+              message={message}
+              isStreaming={showStreamingIndicator}
+            />
+          );
+        })}
+
+        {isLoading && !isStreaming && (
           <MessageBubble
             message={{
               id: 'loading',
@@ -54,7 +64,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             isLoading
           />
         )}
-        
+
         <div ref={messagesEndRef} />
       </div>
     </div>

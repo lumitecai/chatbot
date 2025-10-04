@@ -11,7 +11,6 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-      - /app/node_modules
     environment:
       - NODE_ENV=development
       - REACT_APP_N8N_WEBHOOK_URL=${REACT_APP_N8N_WEBHOOK_URL}
@@ -28,7 +27,6 @@ services:
     container_name: chatbot-demo-test
     volumes:
       - .:/app
-      - /app/node_modules
     environment:
       - NODE_ENV=test
       - CI=true
@@ -57,3 +55,20 @@ services:
       - "8080:80"
     environment:
       - NODE_ENV=production
+
+  # WebSocket server for workflow status updates
+  websocket-server:
+    build:
+      context: ./server
+    container_name: chatbot-websocket-server
+    ports:
+      - "3001:3001"
+    environment:
+      - WS_PORT=3001
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 3s
+      retries: 3

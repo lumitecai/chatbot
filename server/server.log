@@ -1,0 +1,91 @@
+WebSocket server running on port 3001
+Health check: http://localhost:3001/health
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+Status update for 1753955715567-ovu9belc6: {
+  status: 'processing',
+  message: 'Testing WebSocket status update...',
+  progress: 50
+}
+Status sent to 1753955715567-ovu9belc6
+Status update for 1753955715567-ovu9belc6: { status: 'started', message: 'Received your message!', progress: 10 }
+Status sent to 1753955715567-ovu9belc6
+Status update for 1753955715567-ovu9belc6: {
+  status: 'processing',
+  message: 'Analyzing your request...',
+  progress: 30
+}
+Status sent to 1753955715567-ovu9belc6
+Status update for 1753955715567-ovu9belc6: { status: 'api-call', message: 'Calling AI model...', progress: 60 }
+Status sent to 1753955715567-ovu9belc6
+Status update for 1753955715567-ovu9belc6: {
+  status: 'analyzing',
+  message: 'Processing AI response...',
+  progress: 80
+}
+Status sent to 1753955715567-ovu9belc6
+Status update for 1753955715567-ovu9belc6: {
+  status: 'completed',
+  message: 'Request completed successfully!',
+  progress: 100
+}
+Status sent to 1753955715567-ovu9belc6
+Status update for 1753955715567-ovu9belc6: {
+  status: 'error',
+  message: 'An error occurred during processing',
+  progress: 0
+}
+Status sent to 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: test-1753959107292
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753959202082-5ma1qw79j
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: test-1753959107292
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753959509230-arm3nhev3
+WebSocket connected for conversation: 1753955715567-ovu9belc6
+WebSocket connected for conversation: 1753867005418-plha9kbt6
+WebSocket connected for conversation: 1753867005418-plha9kbt6
+WebSocket disconnected for conversation: 1753867005418-plha9kbt6
+WebSocket connected for conversation: 1753961760750-jne7od5pa
+WebSocket connected for conversation: 1753961763329-ipx7u15h3
+WebSocket connected for conversation: 1753867005418-plha9kbt6
+WebSocket connected for conversation: 1753961763329-ipx7u15h3
+WebSocket disconnected for conversation: 1753867005418-plha9kbt6
+WebSocket disconnected for conversation: 1753961760750-jne7od5pa
+WebSocket disconnected for conversation: 1753867005418-plha9kbt6
+WebSocket disconnected for conversation: 1753961763329-ipx7u15h3
+WebSocket disconnected for conversation: 1753961763329-ipx7u15h3
+WebSocket connected for conversation: 1753961763329-ipx7u15h3
+WebSocket disconnected for conversation: 1753961763329-ipx7u15h3
+WebSocket connected for conversation: 1753961763329-ipx7u15h3
+WebSocket connected for conversation: 1753961763329-ipx7u15h3
+SIGTERM received, closing server...
+WebSocket disconnected for conversation: 1753959202082-5ma1qw79j
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753959509230-arm3nhev3
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753955715567-ovu9belc6
+WebSocket disconnected for conversation: 1753961763329-ipx7u15h3
+Server closed

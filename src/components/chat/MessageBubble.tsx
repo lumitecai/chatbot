@@ -8,9 +8,10 @@ import { cn } from '@/lib/utils';
 interface MessageBubbleProps {
   message: Message;
   isLoading?: boolean;
+  isStreaming?: boolean;
 }
 
-function MessageBubbleComponent({ message, isLoading = false }: MessageBubbleProps) {
+function MessageBubbleComponent({ message, isLoading = false, isStreaming = false }: MessageBubbleProps) {
   const isUser = message.role === 'user';
   const [copied, setCopied] = useState(false);
 
@@ -59,19 +60,24 @@ function MessageBubbleComponent({ message, isLoading = false }: MessageBubblePro
               {isUser ? (
                 <p className="whitespace-pre-wrap break-words">{message.content}</p>
               ) : (
-                <MarkdownMessage 
-                  content={message.content}
-                  className={cn(
-                    "prose-p:mb-2 prose-p:last:mb-0",
-                    "prose-headings:text-foreground",
-                    "prose-strong:text-foreground",
-                    "prose-code:text-foreground prose-code:bg-background/50",
-                    "prose-pre:bg-background/50",
-                    "prose-blockquote:text-muted-foreground",
-                    "prose-ul:my-2 prose-ol:my-2",
-                    "prose-li:my-0"
+                <>
+                  <MarkdownMessage
+                    content={message.content}
+                    className={cn(
+                      "prose-p:mb-2 prose-p:last:mb-0",
+                      "prose-headings:text-foreground",
+                      "prose-strong:text-foreground",
+                      "prose-code:text-foreground prose-code:bg-background/50",
+                      "prose-pre:bg-background/50",
+                      "prose-blockquote:text-muted-foreground",
+                      "prose-ul:my-2 prose-ol:my-2",
+                      "prose-li:my-0"
+                    )}
+                  />
+                  {isStreaming && (
+                    <span className="inline-block w-1.5 h-4 ml-1 bg-primary animate-pulse" />
                   )}
-                />
+                </>
               )}
             </div>
             <div className="flex items-center gap-2 mt-2">

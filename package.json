@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@azure/msal-browser": "^4.24.1",
+    "@azure/msal-react": "^3.0.20",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.6.4",

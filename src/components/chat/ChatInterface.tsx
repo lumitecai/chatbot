@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useConversation } from '@/contexts/ConversationContext';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
+import { WorkflowStatus } from './WorkflowStatus';
 import { QuickActions } from '@/components/actions/QuickActions';
 import { SuggestedActions } from '@/components/actions/SuggestedActions';
-import { Message } from '@/types';
-import { generateId } from '@/utils/helpers';
-import { chatAPI } from '@/services/api';
-import { storageService } from '@/services/storage';
+import { useStreamingChat } from '@/hooks/useStreamingChat';
 
 export function ChatInterface() {
-  const { activeConversation, createNewConversation, addMessage } = useConversation();
-  const [isLoading, setIsLoading] = useState(false);
+  const { activeConversation, createNewConversation } = useConversation();
+  const { sendMessage, isLoading, isStreaming } = useStreamingChat();
   const [suggestions] = useState<string[]>([]);
 
   // Create a new conversation if none exists
@@ -29,73 +27,10 @@ export function ChatInterface() {
       messageContent = messageContent ? `${messageContent}\n\n[Attached: ${file.name}]` : `[Attached: ${file.name}]`;
     }
 
-    const userMessage: Message = {
-      id: generateId(),
-      content: messageContent,
-      role: 'user',
-      timestamp: new Date().toISOString(),
-      conversationId: activeConversation.id,
-    };
-
-    // Add user message
-    addMessage(activeConversation.id, userMessage);
-    setIsLoading(true);
-
     try {
-      // Get user ID
-      const userId = storageService.getUserId();
-
-      // Prepare API request - simplified since n8n handles memory
-      const request = {
-        message: content,
-        conversationId: activeConversation.id,
-        userId,
-        context: {}, // Empty since n8n handles memory
-        metadata: {
-          sessionId: storageService.getSessionId(),
-          timestamp: new Date().toISOString(),
-        },
-      };
-
-      // Send to API
-      const response = await chatAPI.sendMessage(request);
-
-      // Add assistant message
-      const assistantMessage: Message = {
-        id: response.messageId,
-        content: response.response,
-        role: 'assistant',
-        timestamp: response.timestamp,
-        conversationId: activeConversation.id,
-      };
-
-      addMessage(activeConversation.id, assistantMessage);
-
-      // Get suggestions for the next interaction
-      // Disabled for n8n webhook integration
-      // const suggestionsResponse = await chatAPI.getSuggestions({
-      //   lastMessage: content,
-      //   conversationContext: [...activeConversation.messages, userMessage, assistantMessage].slice(-5),
-      //   userId,
-      //   conversationId: activeConversation.id,
-      // });
-
-      // setSuggestions(suggestionsResponse.suggestions.map((s) => s.text));
+      await sendMessage(messageContent);
     } catch (error) {
       console.error('Error sending message:', error);
-      
-      // Add error message
-      const errorMessage: Message = {
-        id: generateId(),
-        content: 'I apologize, but I encountered an error processing your message. Please try again.',
-        role: 'assistant',
-        timestamp: new Date().toISOString(),
-        conversationId: activeConversation.id,
-      };
-      
-      addMessage(activeConversation.id, errorMessage);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -117,6 +52,7 @@ export function ChatInterface() {
       <MessageList
         messages={activeConversation.messages}
         isLoading={isLoading}
+        isStreaming={isStreaming}
       />
 
       {/* Actions and Input */}
@@ -145,6 +81,13 @@ export function ChatInterface() {
           />
         </div>
       </div>
+
+      {/* Workflow Status */}
+      <WorkflowStatus
+        conversationId={activeConversation.id}
+        showConnectionStatus={false}
+        autoHideDelay={5000}
+      />
     </div>
   );
 }

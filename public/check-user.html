@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Current User</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        .user-info {
+            background: #f8f9fa;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .label {
+            font-weight: 600;
+            color: #666;
+            margin-right: 10px;
+        }
+        .value {
+            color: #333;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .status.logged-in {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.logged-out {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .group {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        .button:hover {
+            background: #0052a3;
+        }
+        .button.danger {
+            background: #dc3545;
+        }
+        .button.danger:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔍 Current User Status</h1>
+
+        <div id="status"></div>
+        <div id="userDetails"></div>
+        <div id="rawData"></div>
+
+        <div style="margin-top: 20px;">
+            <button class="button" onclick="location.reload()">🔄 Refresh</button>
+            <button class="button danger" onclick="clearAuth()">🗑️ Clear Auth Data</button>
+            <button class="button" onclick="window.location.href='/'">🏠 Go to App</button>
+        </div>
+    </div>
+
+    <script>
+        function displayUserInfo() {
+            const isAuthenticated = localStorage.getItem('isAuthenticated');
+            const userInfoStr = localStorage.getItem('userInfo');
+            const accessToken = localStorage.getItem('accessToken');
+
+            const statusDiv = document.getElementById('status');
+            const detailsDiv = document.getElementById('userDetails');
+            const rawDiv = document.getElementById('rawData');
+
+            if (isAuthenticated === 'true' && userInfoStr) {
+                const userInfo = JSON.parse(userInfoStr);
+
+                statusDiv.innerHTML = `
+                    <p><span class="status logged-in">✓ LOGGED IN</span></p>
+                `;
+
+                let html = `
+                    <div class="user-info">
+                        <p><span class="label">Name:</span><span class="value">${userInfo.name || 'N/A'}</span></p>
+                        <p><span class="label">Email:</span><span class="value">${userInfo.email || 'N/A'}</span></p>
+                        <p><span class="label">Username:</span><span class="value">${userInfo.username || 'N/A'}</span></p>
+                        <p><span class="label">User ID:</span><span class="value">${userInfo.id || 'N/A'}</span></p>
+                `;
+
+                if (userInfo.jobTitle) {
+                    html += `<p><span class="label">Job Title:</span><span class="value">${userInfo.jobTitle}</span></p>`;
+                }
+                if (userInfo.department) {
+                    html += `<p><span class="label">Department:</span><span class="value">${userInfo.department}</span></p>`;
+                }
+                if (userInfo.officeLocation) {
+                    html += `<p><span class="label">Office:</span><span class="value">${userInfo.officeLocation}</span></p>`;
+                }
+
+                html += `</div>`;
+
+                if (userInfo.groups && userInfo.groups.length > 0) {
+                    html += `
+                        <h3>📋 Groups (${userInfo.groups.length})</h3>
+                        <div style="margin-bottom: 20px;">
+                    `;
+                    userInfo.groups.forEach(group => {
+                        html += `<div class="group">${group.displayName}</div>`;
+                    });
+                    html += `</div>`;
+                }
+
+                if (userInfo.sharepoint) {
+                    html += `
+                        <h3>🔗 SharePoint Context</h3>
+                        <div class="user-info">
+                            <p><span class="label">Site ID:</span><span class="value">${userInfo.sharepoint.siteId || 'N/A'}</span></p>
+                            <p><span class="label">Roles:</span><span class="value">${userInfo.sharepoint.roles?.join(', ') || 'N/A'}</span></p>
+                    `;
+                    if (userInfo.sharepoint.permissions) {
+                        const perms = userInfo.sharepoint.permissions;
+                        html += `
+                            <p><span class="label">Permissions:</span></p>
+                            <ul>
+                                <li>Admin: ${perms.isAdmin ? '✅' : '❌'}</li>
+                                <li>Member: ${perms.isMember ? '✅' : '❌'}</li>
+                                <li>Visitor: ${perms.isVisitor ? '✅' : '❌'}</li>
+                                <li>Can Edit: ${perms.canEdit ? '✅' : '❌'}</li>
+                                <li>Can View: ${perms.canView ? '✅' : '❌'}</li>
+                                <li>Can Manage: ${perms.canManage ? '✅' : '❌'}</li>
+                            </ul>
+                        `;
+                    }
+                    html += `</div>`;
+                }
+
+                detailsDiv.innerHTML = html;
+
+                rawDiv.innerHTML = `
+                    <h3>📄 Raw User Data (sent to n8n)</h3>
+                    <pre>${JSON.stringify(userInfo, null, 2)}</pre>
+                `;
+
+            } else {
+                statusDiv.innerHTML = `
+                    <p><span class="status logged-out">✗ NOT LOGGED IN</span></p>
+                    <p>No user information found in localStorage.</p>
+                `;
+                detailsDiv.innerHTML = '';
+                rawDiv.innerHTML = '';
+            }
+        }
+
+        function clearAuth() {
+            if (confirm('Are you sure you want to clear all authentication data?')) {
+                localStorage.removeItem('isAuthenticated');
+                localStorage.removeItem('userInfo');
+                localStorage.removeItem('accessToken');
+                sessionStorage.clear();
+                location.reload();
+            }
+        }
+
+        // Display user info on load
+        displayUserInfo();
+    </script>
+</body>
+</html>

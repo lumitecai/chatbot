@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  chatbot:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    expose:
+      - "80"
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_N8N_WEBHOOK_URL=${REACT_APP_N8N_WEBHOOK_URL}
+      - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health.txt"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      # Traefik labels for Coolify
+      - "traefik.enable=true"
+      - "traefik.http.services.chatbot.loadbalancer.server.port=80"
+      - "traefik.http.routers.chatbot.rule=Host(`chatbot.lumitec.ai`)"
+      - "traefik.http.routers.chatbot.entrypoints=websecure"
+      - "traefik.http.routers.chatbot.tls=true"
+      - "traefik.http.routers.chatbot.tls.certresolver=letsencrypt"
