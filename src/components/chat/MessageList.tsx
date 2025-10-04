@@ -26,9 +26,9 @@ export function MessageList({ messages, isLoading, isStreaming = false }: Messag
     return (
       <div className="flex h-full items-center justify-center p-8">
         <div className="text-center max-w-md">
-          <h2 className="text-2xl font-semibold mb-2">{t('chat.startConversation')}</h2>
+          <h2 className="text-2xl font-semibold mb-2">{t('startConversation', { ns: 'chat' })}</h2>
           <p className="text-muted-foreground">
-            {t('chat.startConversationDesc')}
+            {t('startConversationDesc', { ns: 'chat' })}
           </p>
         </div>
       </div>

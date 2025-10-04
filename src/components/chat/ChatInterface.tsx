@@ -41,7 +41,7 @@ export function ChatInterface() {
       <div className="flex h-full items-center justify-center">
         <div className="text-center">
           <h2 className="text-lg font-medium text-muted-foreground">
-            {t('chat.loadingConversation')}
+            {t('loadingConversation', { ns: 'chat' })}
           </h2>
         </div>
       </div>
@@ -79,7 +79,7 @@ export function ChatInterface() {
           <ChatInput
             onSend={handleSendMessage}
             isLoading={isLoading}
-            placeholder={t('chat.typeMessage')}
+            placeholder={t('typeMessage', { ns: 'chat' })}
           />
         </div>
       </div>

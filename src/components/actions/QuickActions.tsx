@@ -13,21 +13,21 @@ function QuickActionsComponent({ onSelect }: QuickActionsProps) {
   const quickActions = [
     {
       id: 'code-review',
-      label: t('chat.codeReview'),
+      label: t('codeReview', { ns: 'chat' }),
       icon: Code,
-      prompt: t('chat.codeReviewPrompt'),
+      prompt: t('codeReviewPrompt', { ns: 'chat' }),
     },
     {
       id: 'summarize',
-      label: t('chat.summarize'),
+      label: t('summarize', { ns: 'chat' }),
       icon: FileText,
-      prompt: t('chat.summarizePrompt'),
+      prompt: t('summarizePrompt', { ns: 'chat' }),
     },
     {
       id: 'brainstorm',
-      label: t('chat.brainstorm'),
+      label: t('brainstorm', { ns: 'chat' }),
       icon: Lightbulb,
-      prompt: t('chat.brainstormPrompt'),
+      prompt: t('brainstormPrompt', { ns: 'chat' }),
     },
   ];
 
