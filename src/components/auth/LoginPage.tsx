@@ -25,10 +25,10 @@ export function LoginPage() {
     try {
       const success = await loginWithMicrosoft();
       if (!success) {
-        setError(t('auth.loginFailed'));
+        setError(t('loginFailed', { ns: 'auth' }));
       }
     } catch (err) {
-      setError(t('auth.loginError'));
+      setError(t('loginError', { ns: 'auth' }));
     } finally {
       setIsLoading(false);
     }
@@ -42,10 +42,10 @@ export function LoginPage() {
     try {
       const success = await login(username, password);
       if (!success) {
-        setError(t('auth.invalidCredentials'));
+        setError(t('invalidCredentials', { ns: 'auth' }));
       }
     } catch (err) {
-      setError(t('auth.loginError'));
+      setError(t('loginError', { ns: 'auth' }));
     } finally {
       setIsLoading(false);
     }
@@ -56,7 +56,7 @@ export function LoginPage() {
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
-          <p className="text-muted-foreground">{t('auth.checkingAuth')}</p>
+          <p className="text-muted-foreground">{t('checkingAuth', { ns: 'auth' })}</p>
         </div>
       </div>
     );
@@ -71,8 +71,8 @@ export function LoginPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
               <Bot className="w-8 h-8 text-primary" />
             </div>
-            <h1 className="text-2xl font-bold">{t('auth.welcomeTitle')}</h1>
-            <p className="text-muted-foreground mt-2">{t('auth.signInPrompt')}</p>
+            <h1 className="text-2xl font-bold">{t('welcomeTitle', { ns: 'auth' })}</h1>
+            <p className="text-muted-foreground mt-2">{t('signInPrompt', { ns: 'auth' })}</p>
           </div>
 
           {error && (
@@ -101,7 +101,7 @@ export function LoginPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>{t('auth.signingIn')}</span>
+                    <span>{t('signingIn', { ns: 'auth' })}</span>
                   </>
                 ) : (
                   <>
@@ -111,19 +111,19 @@ export function LoginPage() {
                       <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
                       <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
                     </svg>
-                    <span>{t('auth.signInWithMicrosoft')}</span>
+                    <span>{t('signInWithMicrosoft', { ns: 'auth' })}</span>
                   </>
                 )}
               </button>
               <p className="text-xs text-center text-muted-foreground mt-4">
-                {t('auth.useOrgAccount')}
+                {t('useOrgAccount', { ns: 'auth' })}
               </p>
             </div>
           ) : (
             <div className="text-center space-y-4">
               <AlertCircle className="w-12 h-12 mx-auto text-destructive" />
               <p className="text-sm text-muted-foreground">
-                {t('auth.azureNotConfigured')}
+                {t('azureNotConfigured', { ns: 'auth' })}
               </p>
             </div>
           )}
