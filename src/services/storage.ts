@@ -8,12 +8,64 @@ const STORAGE_KEYS = {
   SESSION_ID: 'ai-chat-session-id',
 };
 
+// 30-day retention policy
+const RETENTION_DAYS = 30;
+const RETENTION_MS = RETENTION_DAYS * 24 * 60 * 60 * 1000;
+
 export const storageService = {
+  // Clean up conversations older than 30 days
+  cleanupOldConversations(): number {
+    try {
+      const conversations = this.getConversations();
+      const now = Date.now();
+      const cutoffTime = now - RETENTION_MS;
+
+      const validConversations = conversations.filter((conv) => {
+        const lastMessageTime = conv.messages.length > 0
+          ? new Date(conv.messages[conv.messages.length - 1].timestamp).getTime()
+          : new Date(conv.createdAt).getTime();
+
+        return lastMessageTime >= cutoffTime;
+      });
+
+      const removedCount = conversations.length - validConversations.length;
+
+      if (removedCount > 0) {
+        this.saveConversations(validConversations);
+        console.log(`Cleaned up ${removedCount} conversation(s) older than ${RETENTION_DAYS} days`);
+      }
+
+      return removedCount;
+    } catch (error) {
+      console.error('Error cleaning up old conversations:', error);
+      return 0;
+    }
+  },
+
   // Conversations
   getConversations(): Conversation[] {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.CONVERSATIONS);
-      return data ? JSON.parse(data) : [];
+      const conversations = data ? JSON.parse(data) : [];
+
+      // Automatically clean up old conversations on load
+      const now = Date.now();
+      const cutoffTime = now - RETENTION_MS;
+
+      const validConversations = conversations.filter((conv: Conversation) => {
+        const lastMessageTime = conv.messages.length > 0
+          ? new Date(conv.messages[conv.messages.length - 1].timestamp).getTime()
+          : new Date(conv.createdAt).getTime();
+
+        return lastMessageTime >= cutoffTime;
+      });
+
+      // Save cleaned conversations if any were removed
+      if (validConversations.length < conversations.length) {
+        this.saveConversations(validConversations);
+      }
+
+      return validConversations;
     } catch (error) {
       console.error('Error loading conversations:', error);
       return [];
