@@ -1,21 +1,21 @@
 {
-  "apiSettings": "API Settings",
-  "apiKey": "API Key (Optional)",
-  "apiKeyPlaceholder": "Enter your API key",
-  "apiKeyHelp": "Used for authentication with your n8n webhook",
-  "webhookUrl": "n8n Webhook URL",
-  "webhookUrlPlaceholder": "https://your-n8n.domain/webhook/...",
-  "webhookUrlHelp": "Your n8n webhook endpoint URL",
-  "connectionInfo": "Connection Info:",
+  "apiSettings": "Paramètres API",
+  "apiKey": "Clé API (Optionnel)",
+  "apiKeyPlaceholder": "Entrez votre clé API",
+  "apiKeyHelp": "Utilisé pour l'authentification avec votre webhook n8n",
+  "webhookUrl": "URL du Webhook n8n",
+  "webhookUrlPlaceholder": "https://votre-n8n.domaine/webhook/...",
+  "webhookUrlHelp": "L'URL de votre point de terminaison webhook n8n",
+  "connectionInfo": "Informations de Connexion :",
   "connectionInfoList": [
-    "Leave webhook URL empty to use default endpoint",
-    "API key is optional but recommended for security",
-    "Settings are saved locally and used for all sessions"
+    "Laissez l'URL du webhook vide pour utiliser le point de terminaison par défaut",
+    "La clé API est optionnelle mais recommandée pour la sécurité",
+    "Les paramètres sont enregistrés localement et utilisés pour toutes les sessions"
   ],
-  "connectionConfigured": "✓ Connection configured",
-  "saveSettings": "Save Settings",
-  "show": "Show",
-  "hide": "Hide",
-  "languagePreference": "Language Preference",
-  "languageHelp": "Select your preferred language for the interface"
+  "connectionConfigured": "✓ Connexion configurée",
+  "saveSettings": "Enregistrer les Paramètres",
+  "show": "Afficher",
+  "hide": "Masquer",
+  "languagePreference": "Préférence de Langue",
+  "languageHelp": "Sélectionnez votre langue préférée pour l'interface"
 }

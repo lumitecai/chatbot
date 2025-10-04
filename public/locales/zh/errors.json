@@ -1,13 +1,13 @@
 {
-  "somethingWentWrong": "Oops! Something went wrong",
-  "sorryInconvenience": "We're sorry for the inconvenience. Please refresh the page to try again.",
-  "refreshPage": "Refresh Page",
-  "networkError": "Network error. Please check your connection.",
-  "requestFailed": "Request failed. Please try again.",
-  "fileUploadFailed": "File upload failed",
-  "fileTooLarge": "File is too large. Maximum size is {{maxSize}}MB",
-  "invalidFileType": "Invalid file type",
-  "sessionExpired": "Your session has expired. Please sign in again.",
-  "unauthorized": "Unauthorized. Please sign in.",
-  "notFound": "Page not found"
+  "somethingWentWrong": "哎呀！出了点问题",
+  "sorryInconvenience": "很抱歉给您带来不便。请刷新页面重试。",
+  "refreshPage": "刷新页面",
+  "networkError": "网络错误。请检查您的连接。",
+  "requestFailed": "请求失败。请重试。",
+  "fileUploadFailed": "文件上传失败",
+  "fileTooLarge": "文件太大。最大大小为 {{maxSize}}MB",
+  "invalidFileType": "无效的文件类型",
+  "sessionExpired": "您的会话已过期。请重新登录。",
+  "unauthorized": "未经授权。请登录。",
+  "notFound": "页面未找到"
 }

@@ -1,13 +1,13 @@
 {
-  "somethingWentWrong": "Oops! Something went wrong",
-  "sorryInconvenience": "We're sorry for the inconvenience. Please refresh the page to try again.",
-  "refreshPage": "Refresh Page",
-  "networkError": "Network error. Please check your connection.",
-  "requestFailed": "Request failed. Please try again.",
-  "fileUploadFailed": "File upload failed",
-  "fileTooLarge": "File is too large. Maximum size is {{maxSize}}MB",
-  "invalidFileType": "Invalid file type",
-  "sessionExpired": "Your session has expired. Please sign in again.",
-  "unauthorized": "Unauthorized. Please sign in.",
-  "notFound": "Page not found"
+  "somethingWentWrong": "¡Ups! Algo salió mal",
+  "sorryInconvenience": "Lamentamos las molestias. Por favor actualiza la página para intentar de nuevo.",
+  "refreshPage": "Actualizar Página",
+  "networkError": "Error de red. Por favor verifica tu conexión.",
+  "requestFailed": "La solicitud falló. Por favor intenta de nuevo.",
+  "fileUploadFailed": "Error al subir el archivo",
+  "fileTooLarge": "El archivo es demasiado grande. El tamaño máximo es {{maxSize}}MB",
+  "invalidFileType": "Tipo de archivo inválido",
+  "sessionExpired": "Tu sesión ha expirado. Por favor inicia sesión de nuevo.",
+  "unauthorized": "No autorizado. Por favor inicia sesión.",
+  "notFound": "Página no encontrada"
 }

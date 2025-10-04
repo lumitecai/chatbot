@@ -1,21 +1,21 @@
 {
-  "apiSettings": "API Settings",
-  "apiKey": "API Key (Optional)",
-  "apiKeyPlaceholder": "Enter your API key",
-  "apiKeyHelp": "Used for authentication with your n8n webhook",
+  "apiSettings": "API 设置",
+  "apiKey": "API 密钥（可选）",
+  "apiKeyPlaceholder": "输入您的 API 密钥",
+  "apiKeyHelp": "用于与您的 n8n webhook 进行身份验证",
   "webhookUrl": "n8n Webhook URL",
   "webhookUrlPlaceholder": "https://your-n8n.domain/webhook/...",
-  "webhookUrlHelp": "Your n8n webhook endpoint URL",
-  "connectionInfo": "Connection Info:",
+  "webhookUrlHelp": "您的 n8n webhook 端点 URL",
+  "connectionInfo": "连接信息：",
   "connectionInfoList": [
-    "Leave webhook URL empty to use default endpoint",
-    "API key is optional but recommended for security",
-    "Settings are saved locally and used for all sessions"
+    "留空 webhook URL 以使用默认端点",
+    "API 密钥是可选的，但建议用于安全性",
+    "设置保存在本地并用于所有会话"
   ],
-  "connectionConfigured": "✓ Connection configured",
-  "saveSettings": "Save Settings",
-  "show": "Show",
-  "hide": "Hide",
-  "languagePreference": "Language Preference",
-  "languageHelp": "Select your preferred language for the interface"
+  "connectionConfigured": "✓ 连接已配置",
+  "saveSettings": "保存设置",
+  "show": "显示",
+  "hide": "隐藏",
+  "languagePreference": "语言偏好",
+  "languageHelp": "选择您首选的界面语言"
 }
