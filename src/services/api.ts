@@ -86,13 +86,32 @@ export const chatAPI = {
       const session = sessionManager.getSession();
       const sessionId = session?.sessionId || request.metadata?.sessionId;
       const userId = session?.userId || request.userId;
-      
-      // For n8n webhook, send minimal data since n8n handles memory
+
+      // Get user info from sessionStorage (Azure AD user context)
+      let userInfo = null;
+      try {
+        const userInfoStr = sessionStorage.getItem('userInfo');
+        if (userInfoStr) {
+          userInfo = JSON.parse(userInfoStr);
+        }
+      } catch (error) {
+        console.warn('Failed to parse user info:', error);
+      }
+
+      // For n8n webhook, send message with full user context
       const n8nRequest = {
         message: request.message,
         conversationId: request.conversationId,
+        user: userInfo ? {
+          email: userInfo.email,
+          displayName: userInfo.displayName,
+          department: userInfo.department,
+          jobTitle: userInfo.jobTitle,
+          groups: userInfo.groups || [],
+          officeLocation: userInfo.officeLocation,
+        } : null,
       };
-      
+
       // Configure headers for n8n
       const headers = {
         'Content-Type': 'application/json',
