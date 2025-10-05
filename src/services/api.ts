@@ -103,12 +103,15 @@ export const chatAPI = {
         message: request.message,
         conversationId: request.conversationId,
         user: userInfo ? {
+          id: userInfo.id,
           email: userInfo.email,
-          displayName: userInfo.displayName,
+          name: userInfo.name,
+          username: userInfo.username,
           department: userInfo.department,
           jobTitle: userInfo.jobTitle,
-          groups: userInfo.groups || [],
           officeLocation: userInfo.officeLocation,
+          groups: userInfo.groups || [],
+          sharepoint: userInfo.sharepoint,
         } : null,
       };
 
