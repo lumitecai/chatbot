@@ -47,8 +47,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const userInfo = await authService.getCurrentUser();
           if (userInfo) {
             setUser(userInfo);
-            // Store in sessionStorage instead of localStorage for better security
-            sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+            // Store in localStorage (sessionStorage doesn't survive OAuth redirects)
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
             logger.debug('User authenticated with extended info:', userInfo.email);
           }
         }
@@ -82,8 +82,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const userInfo = await authService.getCurrentUser();
         if (userInfo) {
           setUser(userInfo);
-          // Store in sessionStorage instead of localStorage for better security
-          sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+          // Store in localStorage (sessionStorage doesn't survive OAuth redirects)
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
           logger.info('Microsoft login successful with extended info:', userInfo.email);
           return true;
         }
@@ -118,8 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null);
       tokenService.clearAccessToken();
       localStorage.removeItem('isAuthenticated');
-      // Clear sessionStorage instead of localStorage
-      sessionStorage.removeItem('userInfo');
+      localStorage.removeItem('userInfo');
       logger.info('Logged out successfully');
     } catch (error) {
       logger.error('Logout error:', error);

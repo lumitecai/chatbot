@@ -87,19 +87,21 @@ export const chatAPI = {
       const sessionId = session?.sessionId || request.metadata?.sessionId;
       const userId = session?.userId || request.userId;
 
-      // Get user info from sessionStorage (Azure AD user context)
+      // Get user info from localStorage (Azure AD user context)
+      // Note: Using localStorage instead of sessionStorage because sessionStorage
+      // doesn't survive OAuth redirects (cross-origin navigation clears it)
       let userInfo = null;
       try {
-        const userInfoStr = sessionStorage.getItem('userInfo');
+        const userInfoStr = localStorage.getItem('userInfo');
         if (userInfoStr) {
           userInfo = JSON.parse(userInfoStr);
-          console.log('[API] User info found in sessionStorage:', {
+          console.log('[API] User info found in localStorage:', {
             email: userInfo.email,
             name: userInfo.name,
             groupCount: userInfo.groups?.length || 0
           });
         } else {
-          console.warn('[API] No user info found in sessionStorage');
+          console.warn('[API] No user info found in localStorage');
         }
       } catch (error) {
         console.error('[API] Failed to parse user info:', error);
