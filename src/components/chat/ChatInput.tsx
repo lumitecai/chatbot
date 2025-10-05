@@ -17,10 +17,29 @@ export function ChatInput({ onSend, isLoading, placeholder = "Type a message..."
 
   const handleSend = () => {
     if ((message.trim() || selectedFile) && !isLoading) {
-      onSend(message, selectedFile || undefined);
+      // Input validation and sanitization
+      const trimmedMessage = message.trim();
+
+      // Validate message length
+      if (trimmedMessage.length > 4000) {
+        console.warn('Message too long, truncating to 4000 characters');
+        return;
+      }
+
+      // Check for excessively repetitive content (potential spam/abuse)
+      const uniqueChars = new Set(trimmedMessage.toLowerCase()).size;
+      if (trimmedMessage.length > 100 && uniqueChars < 10) {
+        console.warn('Message appears to be spam or invalid');
+        return;
+      }
+
+      // Basic sanitization - remove control characters except newlines/tabs
+      const sanitizedMessage = trimmedMessage.replace(/[\x00-\x08\x0B-\x0C\x0E-\x1F\x7F]/g, '');
+
+      onSend(sanitizedMessage, selectedFile || undefined);
       setMessage('');
       setSelectedFile(null);
-      
+
       // Reset textarea height
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto';

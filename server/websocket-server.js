@@ -4,14 +4,69 @@ const WebSocket = require('ws');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+
+// CORS configuration - restrict to allowed origins
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : ['http://localhost:3000', 'http://localhost:3002', 'https://chatbot.lumitec.ai'];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc)
+    if (!origin) return callback(null, true);
+
+    if (ALLOWED_ORIGINS.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.warn(`Blocked CORS request from: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
+app.use(express.json({ limit: '1mb' })); // Limit request size
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 // Store active connections by conversationId
 const connections = new Map();
+
+// Rate limiting storage
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW = 60000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 100;
+
+// Rate limiting function
+function checkRateLimit(identifier) {
+  const now = Date.now();
+  const userRequests = rateLimitMap.get(identifier) || [];
+
+  // Remove old requests outside the window
+  const recentRequests = userRequests.filter(time => now - time < RATE_LIMIT_WINDOW);
+
+  if (recentRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
+    return false;
+  }
+
+  recentRequests.push(now);
+  rateLimitMap.set(identifier, recentRequests);
+  return true;
+}
+
+// Clean up rate limit map periodically
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, requests] of rateLimitMap.entries()) {
+    const recentRequests = requests.filter(time => now - time < RATE_LIMIT_WINDOW);
+    if (recentRequests.length === 0) {
+      rateLimitMap.delete(key);
+    } else {
+      rateLimitMap.set(key, recentRequests);
+    }
+  }
+}, RATE_LIMIT_WINDOW);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -26,14 +81,31 @@ app.get('/health', (req, res) => {
 wss.on('connection', (ws, req) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const conversationId = url.searchParams.get('conversationId');
-  
+  const token = url.searchParams.get('token');
+  const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
   if (!conversationId) {
     ws.close(1008, 'Missing conversationId');
     return;
   }
 
-  console.log(`WebSocket connected for conversation: ${conversationId}`);
-  
+  // Basic token validation (in production, validate against session/JWT)
+  // For now, just check token exists - can be enhanced later
+  if (!token && process.env.NODE_ENV === 'production') {
+    console.warn(`WebSocket auth failed for ${conversationId} from ${clientIp}`);
+    ws.close(1008, 'Authentication required');
+    return;
+  }
+
+  // Rate limiting by IP
+  if (!checkRateLimit(clientIp)) {
+    console.warn(`Rate limit exceeded for ${clientIp}`);
+    ws.close(1008, 'Rate limit exceeded');
+    return;
+  }
+
+  console.log(`WebSocket connected for conversation: ${conversationId} from ${clientIp}`);
+
   // Store connection
   connections.set(conversationId, ws);
   
@@ -64,7 +136,18 @@ wss.on('connection', (ws, req) => {
 app.post('/status/:conversationId', (req, res) => {
   const { conversationId } = req.params;
   const { status, message, progress, metadata } = req.body;
-  
+  const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+  // Rate limiting for HTTP endpoints
+  if (!checkRateLimit(clientIp)) {
+    return res.status(429).json({ error: 'Rate limit exceeded' });
+  }
+
+  // Input validation
+  if (!conversationId || typeof conversationId !== 'string' || conversationId.length > 100) {
+    return res.status(400).json({ error: 'Invalid conversationId' });
+  }
+
   console.log(`Status update for ${conversationId}:`, { status, message, progress });
   
   const ws = connections.get(conversationId);

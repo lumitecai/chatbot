@@ -13,10 +13,24 @@
 
 # misc
 .DS_Store
+
+# Environment variables - NEVER commit these
+.env
 .env.local
+.env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
+
+# Sensitive files
+*.pem
+*.key
+*.p12
+*.pfx
+*.cert
+*.crt
 
 npm-debug.log*
 yarn-debug.log*
