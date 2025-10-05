@@ -93,9 +93,16 @@ export const chatAPI = {
         const userInfoStr = sessionStorage.getItem('userInfo');
         if (userInfoStr) {
           userInfo = JSON.parse(userInfoStr);
+          console.log('[API] User info found in sessionStorage:', {
+            email: userInfo.email,
+            name: userInfo.name,
+            groupCount: userInfo.groups?.length || 0
+          });
+        } else {
+          console.warn('[API] No user info found in sessionStorage');
         }
       } catch (error) {
-        console.warn('Failed to parse user info:', error);
+        console.error('[API] Failed to parse user info:', error);
       }
 
       // For n8n webhook, send message with full user context
@@ -114,6 +121,11 @@ export const chatAPI = {
           sharepoint: userInfo.sharepoint,
         } : null,
       };
+
+      console.log('[API] Sending to n8n:', {
+        hasUser: !!n8nRequest.user,
+        userEmail: n8nRequest.user?.email
+      });
 
       // Configure headers for n8n
       const headers = {
