@@ -11,8 +11,9 @@ const detectBrowserCacheLocation = (): BrowserCacheLocation => {
     return BrowserCacheLocation.MemoryStorage;
   }
 
-  // Use session storage for Chrome/Edge
-  return BrowserCacheLocation.SessionStorage;
+  // Use local storage for Chrome/Edge for persistent SSO across browser sessions
+  // This provides seamless authentication like Microsoft 365 web apps
+  return BrowserCacheLocation.LocalStorage;
 };
 
 // Get configuration from environment variables
