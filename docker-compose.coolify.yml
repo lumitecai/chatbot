@@ -7,6 +7,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.production
+      args:
+        - REACT_APP_AZURE_CLIENT_ID=${REACT_APP_AZURE_CLIENT_ID}
+        - REACT_APP_AZURE_TENANT_ID=${REACT_APP_AZURE_TENANT_ID}
+        - REACT_APP_REDIRECT_URI=${REACT_APP_REDIRECT_URI}
+        - REACT_APP_N8N_WEBHOOK_URL=${REACT_APP_N8N_WEBHOOK_URL}
+        - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+        - REACT_APP_WEBSOCKET_URL=${REACT_APP_WEBSOCKET_URL}
     expose:
       - "80"
     environment:
