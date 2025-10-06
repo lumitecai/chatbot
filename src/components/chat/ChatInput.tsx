@@ -1,5 +1,5 @@
 import React, { useState, useRef, KeyboardEvent, ChangeEvent } from 'react';
-import { Send, Paperclip } from 'lucide-react';
+import { Send, Paperclip, Loader2 } from 'lucide-react';
 import { FileUpload } from './FileUpload';
 import { cn } from '@/lib/utils';
 
@@ -111,15 +111,21 @@ export function ChatInput({ onSend, isLoading, placeholder = "Type a message..."
           onClick={handleSend}
           disabled={(!message.trim() && !selectedFile) || isLoading}
           className={cn(
-            'p-2 rounded-md transition-colors',
+            'p-2 rounded-md transition-all duration-200',
             'bg-primary text-primary-foreground',
             'hover:bg-primary/90',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-            'disabled:pointer-events-none disabled:opacity-50'
+            isLoading ? 'animate-pulse' : '',
+            'disabled:pointer-events-none',
+            !isLoading && 'disabled:opacity-50'
           )}
-          aria-label="Send message"
+          aria-label={isLoading ? "Sending message..." : "Send message"}
         >
-          <Send className="h-5 w-5" />
+          {isLoading ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : (
+            <Send className="h-5 w-5" />
+          )}
         </button>
       </div>
 
