@@ -1,0 +1,14 @@
+{
+  "networkError": "Netzwerkfehler",
+  "networkErrorMessage": "Verbindung zum Server konnte nicht hergestellt werden",
+  "serverError": "Serverfehler",
+  "serverErrorMessage": "Der Server hat einen Fehler zurückgegeben",
+  "timeoutError": "Zeitüberschreitung",
+  "timeoutErrorMessage": "Die Anfrage hat zu lange gedauert",
+  "unknownError": "Unbekannter Fehler",
+  "unknownErrorMessage": "Ein unerwarteter Fehler ist aufgetreten",
+  "validationError": "Validierungsfehler",
+  "validationErrorMessage": "Bitte überprüfen Sie Ihre Eingabe",
+  "retry": "Erneut versuchen",
+  "dismiss": "Schließen"
+}

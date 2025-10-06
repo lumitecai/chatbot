@@ -1,0 +1,14 @@
+{
+  "networkError": "Netværksfejl",
+  "networkErrorMessage": "Kan ikke oprette forbindelse til serveren",
+  "serverError": "Serverfejl",
+  "serverErrorMessage": "Serveren returnerede en fejl",
+  "timeoutError": "Timeout",
+  "timeoutErrorMessage": "Anmodningen tog for lang tid",
+  "unknownError": "Ukendt fejl",
+  "unknownErrorMessage": "Der opstod en uventet fejl",
+  "validationError": "Valideringsfejl",
+  "validationErrorMessage": "Venligst tjek dit input",
+  "retry": "Prøv igen",
+  "dismiss": "Luk"
+}

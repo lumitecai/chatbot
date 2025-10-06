@@ -10,6 +10,14 @@ export const supportedLanguages = {
   fr: { name: 'French', nativeName: 'Français', dir: 'ltr' },
   ar: { name: 'Arabic', nativeName: 'العربية', dir: 'rtl' },
   zh: { name: 'Chinese', nativeName: '中文', dir: 'ltr' },
+  de: { name: 'German', nativeName: 'Deutsch', dir: 'ltr' },
+  nl: { name: 'Dutch', nativeName: 'Nederlands', dir: 'ltr' },
+  it: { name: 'Italian', nativeName: 'Italiano', dir: 'ltr' },
+  ja: { name: 'Japanese', nativeName: '日本語', dir: 'ltr' },
+  no: { name: 'Norwegian', nativeName: 'Norsk', dir: 'ltr' },
+  sv: { name: 'Swedish', nativeName: 'Svenska', dir: 'ltr' },
+  fi: { name: 'Finnish', nativeName: 'Suomi', dir: 'ltr' },
+  da: { name: 'Danish', nativeName: 'Dansk', dir: 'ltr' },
 } as const;
 
 export type SupportedLanguage = keyof typeof supportedLanguages;

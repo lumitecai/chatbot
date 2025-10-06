@@ -1,0 +1,14 @@
+{
+  "networkError": "Netwerkfout",
+  "networkErrorMessage": "Kan geen verbinding maken met de server",
+  "serverError": "Serverfout",
+  "serverErrorMessage": "De server heeft een fout geretourneerd",
+  "timeoutError": "Time-out",
+  "timeoutErrorMessage": "Het verzoek duurde te lang",
+  "unknownError": "Onbekende fout",
+  "unknownErrorMessage": "Er is een onverwachte fout opgetreden",
+  "validationError": "Validatiefout",
+  "validationErrorMessage": "Controleer uw invoer",
+  "retry": "Opnieuw proberen",
+  "dismiss": "Sluiten"
+}

@@ -1,0 +1,21 @@
+{
+  "apiSettings": "API-inställningar",
+  "apiKey": "API-nyckel (Valfritt)",
+  "apiKeyPlaceholder": "Ange din API-nyckel",
+  "apiKeyHelp": "Används för autentisering med din n8n webhook",
+  "webhookUrl": "n8n Webhook-URL",
+  "webhookUrlPlaceholder": "https://din-n8n.domän/webhook/...",
+  "webhookUrlHelp": "Din n8n webhook endpoint-URL",
+  "connectionInfo": "Anslutningsinformation:",
+  "connectionInfoList": [
+    "Lämna webhook-URL tom för att använda standardslutpunkt",
+    "API-nyckel är valfritt men rekommenderas för säkerhet",
+    "Inställningar sparas lokalt och används för alla sessioner"
+  ],
+  "connectionConfigured": "✓ Anslutning konfigurerad",
+  "saveSettings": "Spara inställningar",
+  "show": "Visa",
+  "hide": "Dölj",
+  "languagePreference": "Språkinställning",
+  "languageHelp": "Välj ditt föredragna språk för gränssnittet"
+}

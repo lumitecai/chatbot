@@ -1,0 +1,21 @@
+{
+  "apiSettings": "API-instellingen",
+  "apiKey": "API-sleutel (Optioneel)",
+  "apiKeyPlaceholder": "Voer uw API-sleutel in",
+  "apiKeyHelp": "Gebruikt voor authenticatie met uw n8n webhook",
+  "webhookUrl": "n8n Webhook-URL",
+  "webhookUrlPlaceholder": "https://uw-n8n.domein/webhook/...",
+  "webhookUrlHelp": "Uw n8n webhook eindpunt-URL",
+  "connectionInfo": "Verbindingsinformatie:",
+  "connectionInfoList": [
+    "Laat webhook-URL leeg om standaard eindpunt te gebruiken",
+    "API-sleutel is optioneel maar aanbevolen voor beveiliging",
+    "Instellingen worden lokaal opgeslagen en gebruikt voor alle sessies"
+  ],
+  "connectionConfigured": "✓ Verbinding geconfigureerd",
+  "saveSettings": "Instellingen opslaan",
+  "show": "Tonen",
+  "hide": "Verbergen",
+  "languagePreference": "Taalvoorkeur",
+  "languageHelp": "Selecteer uw voorkeurstaal voor de interface"
+}

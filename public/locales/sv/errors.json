@@ -1,0 +1,14 @@
+{
+  "networkError": "Nätverksfel",
+  "networkErrorMessage": "Kan inte ansluta till servern",
+  "serverError": "Serverfel",
+  "serverErrorMessage": "Servern returnerade ett fel",
+  "timeoutError": "Timeout",
+  "timeoutErrorMessage": "Begäran tog för lång tid",
+  "unknownError": "Okänt fel",
+  "unknownErrorMessage": "Ett oväntat fel inträffade",
+  "validationError": "Valideringsfel",
+  "validationErrorMessage": "Vänligen kontrollera din inmatning",
+  "retry": "Försök igen",
+  "dismiss": "Stäng"
+}

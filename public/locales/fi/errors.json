@@ -1,0 +1,14 @@
+{
+  "networkError": "Verkkovirhe",
+  "networkErrorMessage": "Yhteyttä palvelimeen ei voitu muodostaa",
+  "serverError": "Palvelinvirhe",
+  "serverErrorMessage": "Palvelin palautti virheen",
+  "timeoutError": "Aikakatkaisu",
+  "timeoutErrorMessage": "Pyyntö kesti liian kauan",
+  "unknownError": "Tuntematon virhe",
+  "unknownErrorMessage": "Odottamaton virhe tapahtui",
+  "validationError": "Vahvistusvirhe",
+  "validationErrorMessage": "Ole hyvä ja tarkista syötteesi",
+  "retry": "Yritä uudelleen",
+  "dismiss": "Sulje"
+}

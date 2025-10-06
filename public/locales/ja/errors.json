@@ -1,0 +1,14 @@
+{
+  "networkError": "ネットワークエラー",
+  "networkErrorMessage": "サーバーに接続できません",
+  "serverError": "サーバーエラー",
+  "serverErrorMessage": "サーバーがエラーを返しました",
+  "timeoutError": "タイムアウト",
+  "timeoutErrorMessage": "リクエストに時間がかかりすぎました",
+  "unknownError": "不明なエラー",
+  "unknownErrorMessage": "予期しないエラーが発生しました",
+  "validationError": "検証エラー",
+  "validationErrorMessage": "入力内容を確認してください",
+  "retry": "再試行",
+  "dismiss": "閉じる"
+}

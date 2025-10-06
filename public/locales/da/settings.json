@@ -1,0 +1,21 @@
+{
+  "apiSettings": "API-indstillinger",
+  "apiKey": "API-nøgle (Valgfrit)",
+  "apiKeyPlaceholder": "Indtast din API-nøgle",
+  "apiKeyHelp": "Bruges til autentificering med din n8n webhook",
+  "webhookUrl": "n8n Webhook-URL",
+  "webhookUrlPlaceholder": "https://din-n8n.domæne/webhook/...",
+  "webhookUrlHelp": "Din n8n webhook endpoint-URL",
+  "connectionInfo": "Forbindelsesinfo:",
+  "connectionInfoList": [
+    "Lad webhook-URL være tom for at bruge standard endpoint",
+    "API-nøgle er valgfrit, men anbefales af sikkerhedsmæssige årsager",
+    "Indstillinger gemmes lokalt og bruges til alle sessioner"
+  ],
+  "connectionConfigured": "✓ Forbindelse konfigureret",
+  "saveSettings": "Gem indstillinger",
+  "show": "Vis",
+  "hide": "Skjul",
+  "languagePreference": "Sprogpræference",
+  "languageHelp": "Vælg dit foretrukne sprog til grænsefladen"
+}

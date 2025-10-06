@@ -1,0 +1,21 @@
+{
+  "apiSettings": "API設定",
+  "apiKey": "APIキー (オプション)",
+  "apiKeyPlaceholder": "APIキーを入力してください",
+  "apiKeyHelp": "n8n webhookの認証に使用されます",
+  "webhookUrl": "n8n Webhook URL",
+  "webhookUrlPlaceholder": "https://your-n8n.domain/webhook/...",
+  "webhookUrlHelp": "n8n webhookエンドポイントのURL",
+  "connectionInfo": "接続情報:",
+  "connectionInfoList": [
+    "デフォルトのエンドポイントを使用する場合は、webhook URLを空白のままにしてください",
+    "APIキーはオプションですが、セキュリティのため推奨されます",
+    "設定はローカルに保存され、すべてのセッションで使用されます"
+  ],
+  "connectionConfigured": "✓ 接続が設定されました",
+  "saveSettings": "設定を保存",
+  "show": "表示",
+  "hide": "非表示",
+  "languagePreference": "言語設定",
+  "languageHelp": "インターフェースの優先言語を選択してください"
+}

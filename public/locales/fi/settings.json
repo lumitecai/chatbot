@@ -1,0 +1,21 @@
+{
+  "apiSettings": "API-asetukset",
+  "apiKey": "API-avain (Valinnainen)",
+  "apiKeyPlaceholder": "Anna API-avaimesi",
+  "apiKeyHelp": "Käytetään todennukseen n8n webhook-palvelun kanssa",
+  "webhookUrl": "n8n Webhook-URL",
+  "webhookUrlPlaceholder": "https://sinun-n8n.domain/webhook/...",
+  "webhookUrlHelp": "Sinun n8n webhook-päätepisteen URL",
+  "connectionInfo": "Yhteystiedot:",
+  "connectionInfoList": [
+    "Jätä webhook-URL tyhjäksi käyttääksesi oletuspäätepistettä",
+    "API-avain on valinnainen, mutta suositellaan turvallisuussyistä",
+    "Asetukset tallennetaan paikallisesti ja niitä käytetään kaikissa istunnoissa"
+  ],
+  "connectionConfigured": "✓ Yhteys määritetty",
+  "saveSettings": "Tallenna asetukset",
+  "show": "Näytä",
+  "hide": "Piilota",
+  "languagePreference": "Kieliasetukset",
+  "languageHelp": "Valitse haluamasi kieli käyttöliittymälle"
+}

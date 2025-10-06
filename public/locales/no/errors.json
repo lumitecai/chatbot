@@ -1,0 +1,14 @@
+{
+  "networkError": "Nettverksfeil",
+  "networkErrorMessage": "Kan ikke koble til serveren",
+  "serverError": "Serverfeil",
+  "serverErrorMessage": "Serveren returnerte en feil",
+  "timeoutError": "Tidsavbrudd",
+  "timeoutErrorMessage": "Forespørselen tok for lang tid",
+  "unknownError": "Ukjent feil",
+  "unknownErrorMessage": "En uventet feil oppstod",
+  "validationError": "Valideringsfeil",
+  "validationErrorMessage": "Vennligst sjekk inndata",
+  "retry": "Prøv igjen",
+  "dismiss": "Lukk"
+}

@@ -1,0 +1,21 @@
+{
+  "apiSettings": "Impostazioni API",
+  "apiKey": "Chiave API (Opzionale)",
+  "apiKeyPlaceholder": "Inserisci la tua chiave API",
+  "apiKeyHelp": "Utilizzata per l'autenticazione con il tuo webhook n8n",
+  "webhookUrl": "URL Webhook n8n",
+  "webhookUrlPlaceholder": "https://tuo-n8n.dominio/webhook/...",
+  "webhookUrlHelp": "L'URL dell'endpoint del tuo webhook n8n",
+  "connectionInfo": "Informazioni sulla connessione:",
+  "connectionInfoList": [
+    "Lascia l'URL del webhook vuoto per utilizzare l'endpoint predefinito",
+    "La chiave API è opzionale ma consigliata per la sicurezza",
+    "Le impostazioni vengono salvate localmente e utilizzate per tutte le sessioni"
+  ],
+  "connectionConfigured": "✓ Connessione configurata",
+  "saveSettings": "Salva Impostazioni",
+  "show": "Mostra",
+  "hide": "Nascondi",
+  "languagePreference": "Preferenza Lingua",
+  "languageHelp": "Seleziona la tua lingua preferita per l'interfaccia"
+}

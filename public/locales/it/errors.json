@@ -1,0 +1,14 @@
+{
+  "networkError": "Errore di rete",
+  "networkErrorMessage": "Impossibile connettersi al server",
+  "serverError": "Errore del server",
+  "serverErrorMessage": "Il server ha restituito un errore",
+  "timeoutError": "Timeout",
+  "timeoutErrorMessage": "La richiesta ha impiegato troppo tempo",
+  "unknownError": "Errore sconosciuto",
+  "unknownErrorMessage": "Si è verificato un errore imprevisto",
+  "validationError": "Errore di validazione",
+  "validationErrorMessage": "Controlla il tuo input",
+  "retry": "Riprova",
+  "dismiss": "Chiudi"
+}
