@@ -11,7 +11,7 @@ interface SettingsModalProps {
 
 export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { configureSession, isConfigured } = useSession();
-  const { t } = useTranslation('settings');
+  const { t } = useTranslation();
   const [apiKey, setApiKey] = useState('');
   const [webhookUrl, setWebhookUrl] = useState('');
   const [showApiKey, setShowApiKey] = useState(false);
@@ -55,7 +55,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Settings className="h-5 w-5" />
-              <h2 className="text-lg font-semibold">{t('apiSettings')}</h2>
+              <h2 className="text-lg font-semibold">{t('settings.apiSettings')}</h2>
             </div>
             <button
               onClick={onClose}
@@ -70,14 +70,14 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <div>
               <label className="flex items-center gap-2 text-sm font-medium mb-2">
                 <Key className="h-4 w-4" />
-                {t('apiKey')}
+                {t('settings.apiKey')}
               </label>
               <div className="relative">
                 <input
                   type={showApiKey ? 'text' : 'password'}
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
-                  placeholder={t('apiKeyPlaceholder')}
+                  placeholder={t('settings.apiKeyPlaceholder')}
                   className={cn(
                     'w-full rounded-md border bg-background px-3 py-2 pr-20',
                     'text-sm focus:outline-none focus:ring-2 focus:ring-ring'
@@ -88,11 +88,11 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   onClick={() => setShowApiKey(!showApiKey)}
                   className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground"
                 >
-                  {showApiKey ? t('hide') : t('show')}
+                  {showApiKey ? t('settings.hide') : t('settings.show')}
                 </button>
               </div>
               <p className="mt-1 text-xs text-muted-foreground">
-                {t('apiKeyHelp')}
+                {t('settings.apiKeyHelp')}
               </p>
             </div>
 
@@ -100,20 +100,20 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <div>
               <label className="flex items-center gap-2 text-sm font-medium mb-2">
                 <Link className="h-4 w-4" />
-                {t('webhookUrl')}
+                {t('settings.webhookUrl')}
               </label>
               <input
                 type="url"
                 value={webhookUrl}
                 onChange={(e) => setWebhookUrl(e.target.value)}
-                placeholder={t('webhookUrlPlaceholder')}
+                placeholder={t('settings.webhookUrlPlaceholder')}
                 className={cn(
                   'w-full rounded-md border bg-background px-3 py-2',
                   'text-sm focus:outline-none focus:ring-2 focus:ring-ring'
                 )}
               />
               <p className="mt-1 text-xs text-muted-foreground">
-                {t('webhookUrlHelp')}
+                {t('settings.webhookUrlHelp')}
               </p>
             </div>
 
@@ -121,10 +121,10 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <div className="rounded-lg bg-muted/50 p-3 flex gap-2">
               <AlertCircle className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
               <div className="text-xs text-muted-foreground">
-                <p className="font-medium mb-1">{t('connectionInfo')}</p>
+                <p className="font-medium mb-1">{t('settings.connectionInfo')}</p>
                 <ul className="space-y-1 list-disc list-inside">
-                  {Array.isArray(t('connectionInfoList', { returnObjects: true }))
-                    ? (t('connectionInfoList', { returnObjects: true }) as string[]).map((item, idx) => (
+                  {Array.isArray(t('settings.connectionInfoList', { returnObjects: true }))
+                    ? (t('settings.connectionInfoList', { returnObjects: true }) as string[]).map((item, idx) => (
                         <li key={idx}>{item}</li>
                       ))
                     : null
@@ -136,7 +136,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             {/* Status */}
             {isConfigured && (
               <div className="text-sm text-green-600 dark:text-green-400">
-                {t('connectionConfigured')}
+                {t('settings.connectionConfigured')}
               </div>
             )}
           </div>
@@ -163,7 +163,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               )}
             >
               <Save className="h-4 w-4" />
-              {t('saveSettings')}
+              {t('settings.saveSettings')}
             </button>
           </div>
         </div>
