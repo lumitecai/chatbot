@@ -52,9 +52,9 @@ function MessageBubbleComponent({ message, isLoading = false, isStreaming = fals
           <div className="flex flex-col gap-2">
             <span className="text-xs text-muted-foreground">ERA is thinking...</span>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 bg-primary rounded-full dot-glow animate-wave-pulse" />
-              <span className="w-2.5 h-2.5 bg-primary rounded-full dot-glow animate-wave-pulse [animation-delay:150ms]" />
-              <span className="w-2.5 h-2.5 bg-primary rounded-full dot-glow animate-wave-pulse [animation-delay:300ms]" />
+              <span className="w-2.5 h-2.5 bg-primary rounded-full dot-glow animate-wave-pulse animate-delay-0" />
+              <span className="w-2.5 h-2.5 bg-primary rounded-full dot-glow animate-wave-pulse animate-delay-150" />
+              <span className="w-2.5 h-2.5 bg-primary rounded-full dot-glow animate-wave-pulse animate-delay-300" />
             </div>
           </div>
         ) : (
