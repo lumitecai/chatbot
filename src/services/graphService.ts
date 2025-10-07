@@ -8,6 +8,7 @@ export interface UserProfile {
   jobTitle?: string;
   department?: string;
   officeLocation?: string;
+  country?: string;
   id: string;
 }
 
@@ -38,7 +39,7 @@ class GraphService {
     try {
       const user = await this.graphClient
         .api("/me")
-        .select("displayName,mail,userPrincipalName,jobTitle,department,officeLocation,id")
+        .select("displayName,mail,userPrincipalName,jobTitle,department,officeLocation,country,id")
         .get();
 
       logger.debug('User profile fetched:', user.displayName);

@@ -40,6 +40,7 @@ export interface UserInfo {
   jobTitle?: string;
   department?: string;
   officeLocation?: string;
+  country?: string;
   groups?: UserGroup[];
   sharepoint?: SharePointContext;
 }
@@ -250,6 +251,7 @@ class AuthService {
         basicInfo.jobTitle = profile.jobTitle;
         basicInfo.department = profile.department;
         basicInfo.officeLocation = profile.officeLocation;
+        basicInfo.country = profile.country;
         logger.debug('Extended profile fetched');
       } catch (error) {
         logger.warn('Failed to fetch extended profile:', error);
