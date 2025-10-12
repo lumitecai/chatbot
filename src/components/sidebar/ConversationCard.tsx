@@ -48,8 +48,8 @@ export function ConversationCard({ conversation, isActive, onClick }: Conversati
           className={cn(
             'group relative cursor-pointer rounded-lg px-3 py-2 text-sm',
             'transition-all duration-300 ease-out',
-            'hover:bg-accent',
-            isActive && 'bg-accent',
+            'hover:bg-primary/10',
+            isActive && 'bg-primary text-primary-foreground',
             isDeleting && 'opacity-0 scale-95 -translate-x-full'
           )}
           onClick={onClick}
@@ -60,11 +60,17 @@ export function ConversationCard({ conversation, isActive, onClick }: Conversati
               {conversation.title}
             </h3>
             {conversation.lastMessage && (
-              <p className="text-xs text-muted-foreground truncate mt-0.5">
+              <p className={cn(
+                "text-xs truncate mt-0.5",
+                isActive ? "text-primary-foreground/80" : "text-muted-foreground"
+              )}>
                 {truncateText(conversation.lastMessage, 50)}
               </p>
             )}
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className={cn(
+              "text-xs mt-1",
+              isActive ? "text-primary-foreground/70" : "text-muted-foreground"
+            )}>
               {formatTimestamp(conversation.updatedAt)}
             </p>
           </div>
