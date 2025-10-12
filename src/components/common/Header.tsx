@@ -38,7 +38,14 @@ export function Header({ onMenuClick, isSidebarOpen }: HeaderProps) {
         </button>
 
         <div className="flex flex-1 items-center justify-between">
-          <h1 className="text-xl font-semibold">{t('appTitle')}</h1>
+          <div className="flex items-center gap-3">
+            <img
+              src="/era-logo.svg"
+              alt="ERA Logo"
+              className="h-8 w-auto"
+            />
+            <h1 className="text-xl font-semibold">{t('appTitle')}</h1>
+          </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowSettings(true)}
