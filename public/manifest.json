@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ERA Chat",
+  "name": "ERA Chat Assistant - Illuminating Opportunities",
+  "description": "AI-powered chat assistant by Lumitec AI",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#003470",
   "background_color": "#ffffff"
 }
