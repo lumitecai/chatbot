@@ -13,6 +13,16 @@ export function ChatInterface() {
   const { sendMessage, isLoading, isStreaming } = useStreamingChat();
   const { t } = useTranslation();
   const [suggestions] = useState<string[]>([]);
+  const [showQuickActions, setShowQuickActions] = useState(false);
+
+  // Load UI preferences
+  useEffect(() => {
+    const uiPrefs = localStorage.getItem('ui-preferences');
+    if (uiPrefs) {
+      const prefs = JSON.parse(uiPrefs);
+      setShowQuickActions(prefs.showQuickActions ?? false);
+    }
+  }, []);
 
   // Create a new conversation if none exists
   useEffect(() => {
@@ -70,9 +80,11 @@ export function ChatInterface() {
         )}
 
         {/* Quick Actions */}
-        <div className="p-3">
-          <QuickActions onSelect={handleSendMessage} />
-        </div>
+        {showQuickActions && (
+          <div className="p-3">
+            <QuickActions onSelect={handleSendMessage} />
+          </div>
+        )}
 
         {/* Chat Input */}
         <div className="p-4 pt-0">

@@ -6,6 +6,8 @@
   "webhookUrl": "n8n Webhook-URL",
   "webhookUrlPlaceholder": "https://din-n8n.domän/webhook/...",
   "webhookUrlHelp": "Din n8n webhook endpoint-URL",
+  "showQuickActions": "Visa snabbåtgärder",
+  "showQuickActionsHelp": "Visa knappar för Kodgranskning, Sammanfatta och Brainstorming",
   "connectionInfo": "Anslutningsinformation:",
   "connectionInfoList": [
     "Lämna webhook-URL tom för att använda standardslutpunkt",

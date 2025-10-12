@@ -6,6 +6,8 @@
   "webhookUrl": "n8n Webhook URL",
   "webhookUrlPlaceholder": "https://your-n8n.domain/webhook/...",
   "webhookUrlHelp": "您的 n8n webhook 端点 URL",
+  "showQuickActions": "显示快速操作",
+  "showQuickActionsHelp": "显示代码审查、总结和头脑风暴按钮",
   "connectionInfo": "连接信息：",
   "connectionInfoList": [
     "留空 webhook URL 以使用默认端点",

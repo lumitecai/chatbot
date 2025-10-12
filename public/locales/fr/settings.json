@@ -6,6 +6,8 @@
   "webhookUrl": "URL du Webhook n8n",
   "webhookUrlPlaceholder": "https://votre-n8n.domaine/webhook/...",
   "webhookUrlHelp": "L'URL de votre point de terminaison webhook n8n",
+  "showQuickActions": "Afficher les Actions Rapides",
+  "showQuickActionsHelp": "Afficher les boutons Révision de Code, Résumer et Brainstorming",
   "connectionInfo": "Informations de Connexion :",
   "connectionInfoList": [
     "Laissez l'URL du webhook vide pour utiliser le point de terminaison par défaut",

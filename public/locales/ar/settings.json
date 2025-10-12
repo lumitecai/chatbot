@@ -6,6 +6,8 @@
   "webhookUrl": "عنوان URL لـ webhook في n8n",
   "webhookUrlPlaceholder": "https://your-n8n.domain/webhook/...",
   "webhookUrlHelp": "عنوان URL لنقطة نهاية webhook الخاصة بك في n8n",
+  "showQuickActions": "إظهار الإجراءات السريعة",
+  "showQuickActionsHelp": "عرض أزرار مراجعة الكود، التلخيص، والعصف الذهني",
   "connectionInfo": "معلومات الاتصال:",
   "connectionInfoList": [
     "اترك عنوان URL للـ webhook فارغاً لاستخدام نقطة النهاية الافتراضية",

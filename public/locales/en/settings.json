@@ -6,6 +6,8 @@
   "webhookUrl": "n8n Webhook URL",
   "webhookUrlPlaceholder": "https://your-n8n.domain/webhook/...",
   "webhookUrlHelp": "Your n8n webhook endpoint URL",
+  "showQuickActions": "Show Quick Actions",
+  "showQuickActionsHelp": "Display Code Review, Summarize, and Brainstorm buttons",
   "connectionInfo": "Connection Info:",
   "connectionInfoList": [
     "Leave webhook URL empty to use default endpoint",

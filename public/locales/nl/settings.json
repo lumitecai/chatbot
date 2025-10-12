@@ -6,6 +6,8 @@
   "webhookUrl": "n8n Webhook-URL",
   "webhookUrlPlaceholder": "https://uw-n8n.domein/webhook/...",
   "webhookUrlHelp": "Uw n8n webhook eindpunt-URL",
+  "showQuickActions": "Snelle acties tonen",
+  "showQuickActionsHelp": "Toon knoppen voor Code Review, Samenvatten en Brainstormen",
   "connectionInfo": "Verbindingsinformatie:",
   "connectionInfoList": [
     "Laat webhook-URL leeg om standaard eindpunt te gebruiken",

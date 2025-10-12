@@ -15,6 +15,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const [apiKey, setApiKey] = useState('');
   const [webhookUrl, setWebhookUrl] = useState('');
   const [showApiKey, setShowApiKey] = useState(false);
+  const [showQuickActions, setShowQuickActions] = useState(false);
 
   useEffect(() => {
     // Load saved values from localStorage
@@ -24,19 +25,30 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       setApiKey(config.apiKey || '');
       setWebhookUrl(config.webhookUrl || '');
     }
+
+    // Load UI preferences
+    const uiPrefs = localStorage.getItem('ui-preferences');
+    if (uiPrefs) {
+      const prefs = JSON.parse(uiPrefs);
+      setShowQuickActions(prefs.showQuickActions ?? false);
+    }
   }, [isOpen]);
 
   const handleSave = () => {
     // Save to localStorage (for UI persistence)
     localStorage.setItem('ai-chat-config', JSON.stringify({ apiKey, webhookUrl }));
-    
+
+    // Save UI preferences
+    localStorage.setItem('ui-preferences', JSON.stringify({ showQuickActions }));
+
     // Configure session
     configureSession({
       apiKey: apiKey.trim() || undefined,
       webhookUrl: webhookUrl.trim() || undefined,
     });
-    
-    onClose();
+
+    // Trigger page reload to apply UI changes
+    window.location.reload();
   };
 
   if (!isOpen) return null;
@@ -115,6 +127,36 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <p className="mt-1 text-xs text-muted-foreground">
                 {t('settings.webhookUrlHelp')}
               </p>
+            </div>
+
+            {/* Quick Actions Toggle */}
+            <div>
+              <label className="flex items-center justify-between cursor-pointer">
+                <div>
+                  <p className="text-sm font-medium">{t('settings.showQuickActions')}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {t('settings.showQuickActionsHelp')}
+                  </p>
+                </div>
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    checked={showQuickActions}
+                    onChange={(e) => setShowQuickActions(e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className={cn(
+                    "w-11 h-6 rounded-full transition-colors",
+                    "peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2",
+                    showQuickActions ? "bg-primary" : "bg-input"
+                  )}>
+                    <div className={cn(
+                      "absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-background transition-transform",
+                      showQuickActions && "translate-x-5"
+                    )} />
+                  </div>
+                </div>
+              </label>
             </div>
 
             {/* Info Box */}

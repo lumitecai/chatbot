@@ -6,6 +6,8 @@
   "webhookUrl": "n8n Webhook-URL",
   "webhookUrlPlaceholder": "https://sinun-n8n.domain/webhook/...",
   "webhookUrlHelp": "Sinun n8n webhook-päätepisteen URL",
+  "showQuickActions": "Näytä pika-toiminnot",
+  "showQuickActionsHelp": "Näytä Koodin tarkistus, Tiivistä ja Aivoriihi -painikkeet",
   "connectionInfo": "Yhteystiedot:",
   "connectionInfoList": [
     "Jätä webhook-URL tyhjäksi käyttääksesi oletuspäätepistettä",

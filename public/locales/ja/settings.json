@@ -6,6 +6,8 @@
   "webhookUrl": "n8n Webhook URL",
   "webhookUrlPlaceholder": "https://your-n8n.domain/webhook/...",
   "webhookUrlHelp": "n8n webhookエンドポイントのURL",
+  "showQuickActions": "クイックアクションを表示",
+  "showQuickActionsHelp": "コードレビュー、要約、ブレインストーミングボタンを表示",
   "connectionInfo": "接続情報:",
   "connectionInfoList": [
     "デフォルトのエンドポイントを使用する場合は、webhook URLを空白のままにしてください",
